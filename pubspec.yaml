@@ -1,0 +1,35 @@
+name: mxworld
+description: "MX WORLD — global logistics marketing app built with Flutter."
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+
+  # State management.
+  flutter_riverpod: ^2.5.1
+
+  # Declarative routing with web/deep-link support.
+  go_router: ^14.2.0
+
+  # Local persistence.
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Typography.
+  google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
