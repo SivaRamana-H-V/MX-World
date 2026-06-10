@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../controllers/inquiry_controller.dart';
-import '../../../core/constants/app_spacing.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../models/content_models.dart';
-import '../../../services/content_repository.dart';
-import '../../widgets/common/eyebrow_label.dart';
-import '../../widgets/common/mx_button.dart';
-import '../../widgets/common/mx_page_scaffold.dart';
-import '../../widgets/common/safe_network_image.dart';
+import 'package:mxworld/controllers/inquiry_controller.dart';
+import 'package:mxworld/core/constants/app_spacing.dart';
+import 'package:mxworld/core/theme/app_colors.dart';
+import 'package:mxworld/models/content_models.dart';
+import 'package:mxworld/services/content_repository.dart';
+import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
+import 'package:mxworld/views/widgets/common/mx_button.dart';
+import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
+import 'package:mxworld/views/widgets/common/safe_network_image.dart';
 
 /// Contact screen: a hero with an overlaid project-inquiry form, regional
 /// office cards, a network map placeholder, and a strategic-support list.

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_spacing.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../models/content_models.dart';
-import '../../../services/content_repository.dart';
-import '../../widgets/common/eyebrow_label.dart';
-import '../../widgets/common/mx_button.dart';
-import '../../widgets/common/mx_page_scaffold.dart';
-import '../../widgets/common/safe_network_image.dart';
-import '../../widgets/common/stats_strip.dart';
+import 'package:mxworld/core/constants/app_spacing.dart';
+import 'package:mxworld/core/theme/app_colors.dart';
+import 'package:mxworld/models/content_models.dart';
+import 'package:mxworld/services/content_repository.dart';
+import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
+import 'package:mxworld/views/widgets/common/mx_button.dart';
+import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
+import 'package:mxworld/views/widgets/common/safe_network_image.dart';
+import 'package:mxworld/views/widgets/common/stats_strip.dart';
 
 class GlobalNetworkScreen extends StatelessWidget {
   const GlobalNetworkScreen({super.key});
@@ -384,16 +384,14 @@ class _DataAccessSection extends StatelessWidget {
       children: <Widget>[
         _AccordionPanel(
           title: '1. TRACK & TRACE API',
-          body:
-              'Integrate real-time shipment tracking directly into your '
+          body: 'Integrate real-time shipment tracking directly into your '
               'enterprise ERP. Our RESTful API provides granular visibility '
               'across all transport modes with webhook notifications.',
         ),
         SizedBox(height: AppSpacing.md),
         _AccordionPanel(
           title: '2. INTEGRATION HUB',
-          body:
-              'Connect your logistics infrastructure through our unified '
+          body: 'Connect your logistics infrastructure through our unified '
               'integration layer. Supports EDI, API, and flat-file formats '
               'for seamless data interchange.',
         ),
@@ -492,9 +490,7 @@ class _AccordionPanelState extends State<_AccordionPanel> {
                     ),
                   ),
                   Icon(
-                    _expanded
-                        ? Icons.remove
-                        : Icons.add,
+                    _expanded ? Icons.remove : Icons.add,
                     size: 18,
                     color: AppColors.textPrimary,
                   ),
@@ -608,7 +604,8 @@ class _QuickInquirySectionState extends State<_QuickInquirySection> {
       ),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+          constraints:
+              const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
           child: isMobile
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
