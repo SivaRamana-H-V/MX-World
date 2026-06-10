@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 
-/// A network image wrapper that always supplies loading and error states.
-///
-/// Follows the Flutter guidance to never use a bare [Image.network]; shows a
-/// subtle progress indicator while loading and a neutral fallback on failure.
+/// A network image wrapper that supplies loading/error states and fade-in on
+/// load, with memory-cache sizing to keep GPU footprint low.
 class SafeNetworkImage extends StatelessWidget {
   const SafeNetworkImage({
     super.key,
@@ -22,6 +20,7 @@ class SafeNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color placeholder =
         onDark ? AppColors.charcoal : AppColors.borderLight;
+
     return Image.network(
       url,
       fit: fit,

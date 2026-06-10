@@ -11,21 +11,18 @@ import '../../widgets/common/mx_page_scaffold.dart';
 import '../../widgets/common/safe_network_image.dart';
 import '../../widgets/common/stats_strip.dart';
 
-/// Company narrative screen: brand statement, operational-excellence detail,
-/// value-driven solution list, performance metrics, and a closing CTA band.
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MxPageScaffold(
-      currentRoute: '/about',
-      navOnDark: true,
       sections: <Widget>[
         _AboutHero(),
         _OperationalExcellence(),
         _AboutStatsBand(),
         _CtaBand(),
+        _QuickInquiryForm(),
       ],
     );
   }
@@ -41,7 +38,7 @@ class _AboutHero extends StatelessWidget {
     final TextTheme text = Theme.of(context).textTheme;
 
     return ColoredBox(
-      color: AppColors.black,
+      color: const Color(0xFF0F1720),
       child: Padding(
         padding: AppSpacing.pageGutter(width).copyWith(
           top: AppSpacing.section,
@@ -260,7 +257,6 @@ class _AboutStatsBand extends StatelessWidget {
     return ColoredBox(
       color: AppColors.black,
       child: Theme(
-        // Force dark text styling inside the dark band.
         data: Theme.of(context).copyWith(
           dividerColor: AppColors.borderDark,
           textTheme: Theme.of(context).textTheme.apply(
@@ -287,42 +283,248 @@ class _CtaBand extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme text = Theme.of(context).textTheme;
+
     return Container(
       color: const Color(0xFFD9DDE2),
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.section),
       child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text('READY TO NAVIGATE?', style: text.headlineLarge),
-            const SizedBox(height: AppSpacing.md),
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 420),
-              child: Text(
-                'Discover how our global network and expertise can transform '
-                'your supply chain into a competitive advantage.',
-                textAlign: TextAlign.center,
-                style: text.bodyMedium,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            Row(
-              mainAxisSize: MainAxisSize.min,
+        child: Container(
+          constraints: const BoxConstraints(
+            maxWidth: 640,
+            minHeight: 300,
+          ),
+          child: ClipRect(
+            child: Stack(
               children: <Widget>[
-                MxButton(
-                  label: 'Get a Quote',
-                  onPressed: () => context.go('/contact'),
+                const Positioned.fill(
+                  child: Opacity(
+                    opacity: 0.2,
+                    child: SafeNetworkImage(
+                      url: ContentRepository.heroImage,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-                const SizedBox(width: AppSpacing.md),
-                MxButton(
-                  label: 'Global Network',
-                  filled: false,
-                  onPressed: () => context.go('/network'),
+                Padding(
+                  padding: const EdgeInsets.all(AppSpacing.xl),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'READY TO NAVIGATE?',
+                        style: text.headlineLarge,
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 420),
+                        child: Text(
+                          'Discover how our global network and expertise can '
+                          'transform your supply chain into a competitive '
+                          'advantage.',
+                          textAlign: TextAlign.center,
+                          style: text.bodyMedium,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          MxButton(
+                            label: 'Get a Quote',
+                            onPressed: () => context.go('/contact'),
+                          ),
+                          const SizedBox(width: AppSpacing.md),
+                          MxButton(
+                            label: 'Global Network',
+                            filled: false,
+                            onPressed: () => context.go('/network'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class _QuickInquiryForm extends StatefulWidget {
+  const _QuickInquiryForm();
+
+  @override
+  State<_QuickInquiryForm> createState() => _QuickInquiryFormState();
+}
+
+class _QuickInquiryFormState extends State<_QuickInquiryForm> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double width = MediaQuery.sizeOf(context).width;
+    final bool isMobile = AppBreakpoints.isMobile(width);
+    final TextTheme text = Theme.of(context).textTheme;
+
+    final Widget form = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        _FormField(
+          controller: _nameController,
+          hint: 'Your Name',
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        _FormField(
+          controller: _emailController,
+          hint: 'Your Email',
+          keyboardType: TextInputType.emailAddress,
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        _FormField(
+          controller: _messageController,
+          hint: 'Message',
+          maxLines: 3,
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        SizedBox(
+          height: 52,
+          child: FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.black,
+              foregroundColor: AppColors.white,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+              ),
+            ),
+            onPressed: () {},
+            child: Text(
+              'SUBMIT NOW',
+              style: text.labelLarge?.copyWith(
+                color: AppColors.white,
+                fontSize: 12,
+                letterSpacing: 1.8,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+
+    return Container(
+      color: const Color(0xFFD9E2EC),
+      padding: AppSpacing.pageGutter(width).copyWith(
+        top: AppSpacing.section,
+        bottom: AppSpacing.section,
+      ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+          child: isMobile
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Quick Inquiry',
+                      style: text.headlineLarge,
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    Text(
+                      'Have a specific logistics challenge? Reach out to our '
+                      'global team for a tailored solution.',
+                      style: text.bodyMedium,
+                    ),
+                    const SizedBox(height: AppSpacing.xl),
+                    form,
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: AppSpacing.xl),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Quick Inquiry',
+                              style: text.headlineLarge,
+                            ),
+                            const SizedBox(height: AppSpacing.md),
+                            Text(
+                              'Have a specific logistics challenge? Reach out '
+                              'to our global team for a tailored solution that '
+                              'meets your scale and precision requirements.',
+                              style: text.bodyMedium,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.section),
+                    Expanded(flex: 5, child: form),
+                  ],
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FormField extends StatelessWidget {
+  const _FormField({
+    required this.controller,
+    required this.hint,
+    this.maxLines = 1,
+    this.keyboardType,
+  });
+
+  final TextEditingController controller;
+  final String hint;
+  final int maxLines;
+  final TextInputType? keyboardType;
+
+  @override
+  Widget build(BuildContext context) {
+    final TextTheme text = Theme.of(context).textTheme;
+    return TextField(
+      controller: controller,
+      maxLines: maxLines,
+      keyboardType: keyboardType,
+      textCapitalization: maxLines > 1
+          ? TextCapitalization.sentences
+          : TextCapitalization.words,
+      style: text.bodyLarge?.copyWith(color: AppColors.textPrimary),
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: text.bodyMedium?.copyWith(
+          color: AppColors.textTertiary,
+        ),
+        isDense: true,
+        contentPadding: const EdgeInsets.symmetric(vertical: 14),
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.borderLight),
+        ),
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.black, width: 1),
+        ),
+        fillColor: AppColors.white,
+        filled: true,
       ),
     );
   }

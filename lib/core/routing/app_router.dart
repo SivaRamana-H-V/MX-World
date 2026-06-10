@@ -6,6 +6,7 @@ import '../../views/screens/global_network/global_network_screen.dart';
 import '../../views/screens/home/home_screen.dart';
 import '../../views/screens/services/services_screen.dart';
 import '../../views/screens/splash/splash_screen.dart';
+import '../../views/widgets/common/app_shell.dart';
 import 'app_transitions.dart';
 
 /// Tracks whether the splash screen has completed its animation.
@@ -38,40 +39,45 @@ abstract final class AppRouter {
           child: const SplashScreen(),
         ),
       ),
-      GoRoute(
-        path: '/home',
-        pageBuilder: (context, state) => AppTransitions.goRouterPage(
-          state: state,
-          child: const HomeScreen(),
-        ),
-      ),
-      GoRoute(
-        path: '/about',
-        pageBuilder: (context, state) => AppTransitions.goRouterPage(
-          state: state,
-          child: const AboutScreen(),
-        ),
-      ),
-      GoRoute(
-        path: '/services',
-        pageBuilder: (context, state) => AppTransitions.goRouterPage(
-          state: state,
-          child: const ServicesScreen(),
-        ),
-      ),
-      GoRoute(
-        path: '/network',
-        pageBuilder: (context, state) => AppTransitions.goRouterPage(
-          state: state,
-          child: const GlobalNetworkScreen(),
-        ),
-      ),
-      GoRoute(
-        path: '/contact',
-        pageBuilder: (context, state) => AppTransitions.goRouterPage(
-          state: state,
-          child: const ContactScreen(),
-        ),
+      ShellRoute(
+        builder: (context, state, child) => AppShell(child: child),
+        routes: <RouteBase>[
+          GoRoute(
+            path: '/home',
+            pageBuilder: (context, state) => AppTransitions.goRouterPage(
+              state: state,
+              child: const HomeScreen(),
+            ),
+          ),
+          GoRoute(
+            path: '/about',
+            pageBuilder: (context, state) => AppTransitions.goRouterPage(
+              state: state,
+              child: const AboutScreen(),
+            ),
+          ),
+          GoRoute(
+            path: '/services',
+            pageBuilder: (context, state) => AppTransitions.goRouterPage(
+              state: state,
+              child: const ServicesScreen(),
+            ),
+          ),
+          GoRoute(
+            path: '/network',
+            pageBuilder: (context, state) => AppTransitions.goRouterPage(
+              state: state,
+              child: const GlobalNetworkScreen(),
+            ),
+          ),
+          GoRoute(
+            path: '/contact',
+            pageBuilder: (context, state) => AppTransitions.goRouterPage(
+              state: state,
+              child: const ContactScreen(),
+            ),
+          ),
+        ],
       ),
     ],
   );

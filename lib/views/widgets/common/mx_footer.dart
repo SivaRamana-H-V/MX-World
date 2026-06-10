@@ -6,8 +6,8 @@ import '../../../core/theme/app_colors.dart';
 
 /// Column of links rendered in the footer.
 @immutable
-class _FooterColumn {
-  const _FooterColumn(this.title, this.items);
+class FooterColumn {
+  const FooterColumn(this.title, this.items);
   final String title;
   final List<String> items;
 }
@@ -17,29 +17,31 @@ class _FooterColumn {
 /// Lays out the brand blurb plus several link columns, collapsing into a
 /// single column on mobile, and a legal bar beneath.
 class MxFooter extends StatelessWidget {
-  const MxFooter({super.key});
+  const MxFooter({super.key, this.columns});
 
-  static const List<_FooterColumn> _columns = <_FooterColumn>[
-    _FooterColumn('SERVICES', <String>[
+  final List<FooterColumn>? columns;
+
+  static const List<FooterColumn> _defaultColumns = <FooterColumn>[
+    FooterColumn('TRANSPORTATION', <String>[
       'Sea Freight',
       'Air Freight',
       'Road Transport',
-      '4PL Logistics',
+      'Rail Logistics',
+      'Intermodal',
+    ]),
+    FooterColumn('SOLUTIONS', <String>[
+      '4PL Integration',
+      'Cold Chain',
+      'Customs Clearance',
       'Warehousing',
+      'Project Logistics',
     ]),
-    _FooterColumn('COMPANY', <String>[
-      'About Us',
-      'Sustainability',
-      'Investor Relations',
-      'Newsroom',
-      'Careers',
-    ]),
-    _FooterColumn('GLOBAL HUBS', <String>[
-      'Rotterdam HQ',
-      'Singapore APAC',
-      'New York Amer',
-      'Hamburg EMEA',
-      'Dubai MEA',
+    FooterColumn('DIGITAL SERVICES', <String>[
+      'API Integration',
+      'Real-Time Tracking',
+      'Analytics Suite',
+      'Digital Twin',
+      'Blockchain Docs',
     ]),
   ];
 
@@ -93,8 +95,11 @@ class MxFooter extends StatelessWidget {
       ),
     );
 
+    final List<FooterColumn> effectiveColumns =
+        columns ?? _defaultColumns;
+
     final List<Widget> linkColumns = <Widget>[
-      for (final _FooterColumn col in _columns)
+      for (final FooterColumn col in effectiveColumns)
         SizedBox(
           width: 160,
           child: Column(

@@ -19,8 +19,6 @@ class ContactScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const MxPageScaffold(
-      currentRoute: '/contact',
-      navOnDark: false,
       sections: <Widget>[
         _ContactHero(),
         _OfficesSection(),

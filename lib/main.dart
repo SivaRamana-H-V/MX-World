@@ -9,7 +9,7 @@ import 'core/theme/app_theme.dart';
 import 'services/inquiry_storage_service.dart';
 
 /// Application entry point.
-///
+///9
 /// Bootstraps Hive for local persistence, opens the inquiry storage box, then
 /// injects the initialized service into the Riverpod provider tree via an
 /// override before running the app.

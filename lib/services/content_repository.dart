@@ -26,32 +26,34 @@ abstract final class ContentRepository {
 
   static const List<PortfolioItem> portfolio = <PortfolioItem>[
     PortfolioItem(
-      tag: 'SEA FREIGHT',
-      title: 'INTEGRATED TERMINAL SOLUTIONS',
+      tag: 'HUB EXPANSION',
+      title: 'SHANGHAI HUB EXPANSION',
       description:
-          'Customs clearance and real-time road visibility solutions for '
-          'global electronics trade.',
+          'Strategic terminal expansion increasing throughput capacity by 40% '
+          'with automated sorting and real-time cargo tracking systems.',
       imageUrl: _port,
       isLarge: true,
     ),
     PortfolioItem(
-      tag: 'WAREHOUSING',
-      title: 'FULFILMENT HUBS',
-      description: 'Precision sorting and distribution.',
+      tag: 'LOGISTICS CARE',
+      title: 'EURA-LOGIC CARE',
+      description: 'Precision cold-chain logistics for pharmaceutical networks.',
       imageUrl: _warehouse,
     ),
     PortfolioItem(
-      tag: 'AIR',
-      title: 'AIR FREIGHT FLEET',
-      description: 'PROJECT LOGISTICS & HIGH-TECH',
+      tag: 'AVIATION FLEET',
+      title: 'RAPID AIR FLEET',
+      description: 'Time-critical air freight solutions with dedicated cargo '
+          'aircraft operating across intercontinental routes.',
       imageUrl: _airCargo,
+      isLarge: true,
     ),
     PortfolioItem(
-      tag: 'SEA',
-      title: 'SUPPLY CHAIN RESILIENCE',
-      description: 'SUSTAINABLE LOGISTICS SOLUTIONS',
+      tag: 'OCEAN FREIGHT',
+      title: "INT'L OCEAN FREIGHT",
+      description: 'End-to-end container shipping with real-time vessel '
+          'tracking and automated documentation handling.',
       imageUrl: _containerShip,
-      isLarge: true,
     ),
   ];
 
@@ -59,6 +61,14 @@ abstract final class ContentRepository {
     StatItem(value: '12M+', label: 'METRIC TONS SHIPPED YEARLY'),
     StatItem(value: '1,300', label: 'GLOBAL OPERATIONAL SITES'),
     StatItem(value: '99.9%', label: 'TRANSIT RELIABILITY RATE'),
+    StatItem(value: '24/7', label: 'LIVE OPERATIONS'),
+  ];
+
+  static const List<StatItem> whyChooseUsStats = <StatItem>[
+    StatItem(value: '12M+', label: 'ANNUAL TONNAGE'),
+    StatItem(value: '1,300', label: 'OPERATIONAL SITES'),
+    StatItem(value: '99.9%', label: 'RELIABILITY RATE'),
+    StatItem(value: '24/7', label: 'GLOBAL COVERAGE'),
   ];
 
   static const List<StatItem> aboutStats = <StatItem>[
@@ -155,10 +165,10 @@ abstract final class ContentRepository {
   ];
 
   static const List<StatItem> networkStats = <StatItem>[
-    StatItem(value: '142', label: 'GLOBAL HUBS'),
-    StatItem(value: 'Global', label: 'OPERATIONAL RADIUS'),
-    StatItem(value: '850+', label: 'VESSEL FLEET'),
-    StatItem(value: '12.4M', label: 'WAREHOUSE SQ.M'),
+    StatItem(value: '142', label: 'COUNTRIES'),
+    StatItem(value: 'Global', label: 'COVERAGE'),
+    StatItem(value: '650+', label: 'NODES'),
+    StatItem(value: '12.4M', label: 'METRIC TONS'),
   ];
 
   static const List<HubItem> contactOffices = <HubItem>[
