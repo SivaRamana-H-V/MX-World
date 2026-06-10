@@ -14,15 +14,36 @@ abstract final class ContentRepository {
   static const String _warehouse =
       'https://images.unsplash.com/photo-1553413077-190dd305871c?w=1200&q=80';
   static const String _airCargo =
-      'https://images.unsplash.com/photo-1583500178690-f7fd39d8a4f7?w=1200&q=80';
+      'https://www.consultancy-me.com/illustrations/news/detail/2024-10-09-090427457-Six_strategic_areas_of_focus_for_expanding_air_cargo_business_detail.jpg';
   static const String _containerShip =
       'https://images.unsplash.com/photo-1605281317010-fe5ffe798166?w=1200&q=80';
   static const String _terminal =
       'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1200&q=80';
-  static const String _crane =
-      'https://images.unsplash.com/photo-1571086291540-b137f3e2a9f1?w=1200&q=80';
+  static const String _crane = 'https://i.ytimg.com/vi/uRj7bk64GBU/hq720.jpg';
 
+  static const String _room =
+      'https://thumbs.dreamstime.com/b/conference-room-office-space-rental-world-map-city-view-business-meetings-global-planning-modern-sleek-design-402026523.jpg';
+// Air Freight - Nose-loading cargo airplane on the tarmac at night
+  static const String airFreightImage =
+      'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=80';
+
+  // Sea Freight - Container shipping terminal with cranes at dusk
+  static const String seaFreightImage =
+      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80';
+
+  // Import & Export - Symmetrical warehouse interior aisle with high shelving units
+  static const String importExportImage =
+      'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=1200&q=80';
+
+  // Express Cargo - Close-up motion blur of high-speed sorting conveyor belt packages
+  static const String expressCargoImage =
+      'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=1200&q=80';
+
+  // Door to Door - Close-up of handing over a sleek premium package package parcel
+  static const String doorToDoorImage =
+      'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=1200&q=80';
   static const String heroImage = _terminal;
+  static const String aboutHeroImage = _room;
 
   static const List<PortfolioItem> portfolio = <PortfolioItem>[
     PortfolioItem(
@@ -37,7 +58,8 @@ abstract final class ContentRepository {
     PortfolioItem(
       tag: 'LOGISTICS CARE',
       title: 'EURA-LOGIC CARE',
-      description: 'Precision cold-chain logistics for pharmaceutical networks.',
+      description:
+          'Precision cold-chain logistics for pharmaceutical networks.',
       imageUrl: _warehouse,
     ),
     PortfolioItem(
@@ -123,8 +145,7 @@ abstract final class ContentRepository {
       index: '04',
       category: 'RAPID TRANSIT',
       title: 'Express Cargo',
-      description:
-          'Time-critical delivery solutions for an accelerated world. '
+      description: 'Time-critical delivery solutions for an accelerated world. '
           'Leveraging real-time transportation visibility to guarantee express '
           'windows across our integrated global network.',
       imageUrl: _terminal,
@@ -134,8 +155,7 @@ abstract final class ContentRepository {
       index: '05',
       category: 'LAST MILE INTEGRATION',
       title: 'Door to Door',
-      description:
-          'The final link in the global chain. We provide absolute '
+      description: 'The final link in the global chain. We provide absolute '
           'door-to-door reliability with white-glove service, fully integrated '
           'with our 4PL management systems.',
       imageUrl: _crane,
@@ -189,14 +209,14 @@ abstract final class ContentRepository {
     HubItem(
       region: 'AMERICAS REGIONAL HUB',
       city: 'New York',
-      address: '150 Greenwich St, 4 World Trade Center\nNew York, NY 10007, USA',
+      address:
+          '150 Greenwich St, 4 World Trade Center\nNew York, NY 10007, USA',
       capacity: '',
       phone: '+1 212 555 0198',
     ),
   ];
 
-  static const List<OperationsDeskItem> operationsDesks =
-      <OperationsDeskItem>[
+  static const List<OperationsDeskItem> operationsDesks = <OperationsDeskItem>[
     OperationsDeskItem(code: 'OPS-01', title: 'GLOBAL OPERATIONS DESK'),
     OperationsDeskItem(code: 'OPS-02', title: 'COMPLIANCE & REGULATORY'),
     OperationsDeskItem(code: 'OPS-03', title: 'CHAIN OPTIMIZATION AUDIT'),

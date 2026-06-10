@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_spacing.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../models/content_models.dart';
-import '../../../services/content_repository.dart';
-import '../../widgets/common/eyebrow_label.dart';
-import '../../widgets/common/mx_button.dart';
-import '../../widgets/common/mx_page_scaffold.dart';
-import '../../widgets/common/reveal_on_scroll.dart';
-import '../../widgets/common/safe_network_image.dart';
+import 'package:mxworld/core/constants/app_spacing.dart';
+import 'package:mxworld/core/theme/app_colors.dart';
+import 'package:mxworld/models/content_models.dart';
+import 'package:mxworld/services/content_repository.dart';
+import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
+import 'package:mxworld/views/widgets/common/mx_button.dart';
+import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
+import 'package:mxworld/views/widgets/common/reveal_on_scroll.dart';
+import 'package:mxworld/views/widgets/common/safe_network_image.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,6 +16,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MxPageScaffold(
+      // Top Navigation Header included inside Scaffold layer if not handled globally,
+      // or injected explicitly as the first item if using a scrolling layout container.
       sections: <Widget>[
         _HeroSection(),
         _WhyChooseUs(),
@@ -24,6 +26,26 @@ class HomeScreen extends StatelessWidget {
         _EngineeringReach(),
         _QuickInquiryForm(),
       ],
+    );
+  }
+}
+
+class _HeaderLink extends StatelessWidget {
+  final String label;
+  const _HeaderLink({required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      child: Text(
+        label,
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1.2,
+              fontSize: 13,
+            ),
+      ),
     );
   }
 }
@@ -38,7 +60,7 @@ class _HeroSection extends StatelessWidget {
     final TextTheme text = Theme.of(context).textTheme;
 
     return SizedBox(
-      height: isMobile ? 480 : 560,
+      height: isMobile ? 520 : 640,
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -46,22 +68,22 @@ class _HeroSection extends StatelessWidget {
           DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
                 colors: <Color>[
-                  AppColors.black.withValues(alpha: 0.85),
-                  AppColors.black.withValues(alpha: 0.35),
+                  AppColors.black.withValues(alpha: 0.9),
+                  AppColors.black.withValues(alpha: 0.2),
                 ],
               ),
             ),
           ),
           Padding(
-            padding: AppSpacing.pageGutter(width)
-                .copyWith(bottom: AppSpacing.xxl),
+            padding:
+                AppSpacing.pageGutter(width).copyWith(bottom: AppSpacing.xxl),
             child: Align(
               alignment: Alignment.bottomLeft,
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 640),
+                constraints: const BoxConstraints(maxWidth: 720),
                 child: RevealOnScroll(
                   duration: const Duration(milliseconds: 800),
                   child: Column(
@@ -72,18 +94,20 @@ class _HeroSection extends StatelessWidget {
                         'GLOBAL LOGISTICS\nREDEFINED.',
                         style:
                             (isMobile ? text.displayMedium : text.displayLarge)
-                                ?.copyWith(color: AppColors.white),
+                                ?.copyWith(
+                          color: AppColors.white,
+                          height: 1.1,
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
-                      const SizedBox(height: AppSpacing.md),
-                      Container(width: 48, height: 2, color: AppColors.white),
-                      const SizedBox(height: AppSpacing.md),
+                      const SizedBox(height: AppSpacing.lg),
+                      Container(width: 64, height: 2, color: AppColors.white),
+                      const SizedBox(height: AppSpacing.lg),
                       Text(
-                        'End-to-end visibility and world-class freight '
-                        'solutions. Mastering the complexity of global '
-                        'infrastructure through high-fidelity operational '
-                        'transparency.',
+                        'End-to-end visibility and world-class freight solutions. Mastering the complexity of global infrastructure through high-fidelity operational transparency.',
                         style: text.bodyLarge?.copyWith(
                           color: AppColors.textOnDarkSecondary,
+                          height: 1.5,
                         ),
                       ),
                     ],
@@ -114,24 +138,16 @@ class _WhyChooseUs extends StatelessWidget {
         const SizedBox(height: AppSpacing.md),
         Text(
           'A GLOBAL NETWORK\nBUILT FOR SCALE.',
-          style: text.headlineLarge,
+          style: text.headlineLarge?.copyWith(fontWeight: FontWeight.w800),
         ),
         const SizedBox(height: AppSpacing.lg),
         Text(
-          'Our interconnected network operates across every major trade lane, '
-          'powered by over 85,000 professionals at nearly 1,300 sites in close '
-          'to 100 countries. We are the logistics partner of choice for '
-          '400,000 worldwide customers, providing a seamless architecture '
-          'for global trade.',
-          style: text.bodyMedium,
+          'Our interconnected network operates across every major trade lane, powered by over 85,000 professionals at nearly 1,300 sites in close to 100 countries.',
+          style: text.bodyMedium
+              ?.copyWith(color: AppColors.textTertiary, height: 1.5),
         ),
         const SizedBox(height: AppSpacing.md),
-        Text(
-          'From sea and air freight to complex 4PL integrated logistics, '
-          'every touchpoint in the fulfillment cycle is optimized for '
-          'visibility, speed, and reliability.',
-          style: text.bodyMedium,
-        ),
+        const _HeaderLink(label: 'DISCOVER MORE →'),
       ],
     );
 
@@ -139,9 +155,9 @@ class _WhyChooseUs extends StatelessWidget {
       crossAxisCount: 2,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisSpacing: AppSpacing.lg,
-      mainAxisSpacing: AppSpacing.lg,
-      childAspectRatio: 1.5,
+      crossAxisSpacing: AppSpacing.xl,
+      mainAxisSpacing: AppSpacing.xl,
+      childAspectRatio: 1.8,
       children: <Widget>[
         for (final StatItem stat in ContentRepository.whyChooseUsStats)
           Column(
@@ -151,16 +167,18 @@ class _WhyChooseUs extends StatelessWidget {
               Text(
                 stat.value,
                 style: text.displayMedium?.copyWith(
-                  fontSize: 36,
-                  fontWeight: FontWeight.w800,
+                  fontSize: 40,
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.black,
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                stat.label,
+                stat.label.toUpperCase(),
                 style: text.labelMedium?.copyWith(
                   color: AppColors.textTertiary,
                   letterSpacing: 1.6,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ],
@@ -176,7 +194,7 @@ class _WhyChooseUs extends StatelessWidget {
             ? Column(
                 children: <Widget>[
                   left,
-                  const SizedBox(height: AppSpacing.xl),
+                  const SizedBox(height: AppSpacing.xxl),
                   right,
                 ],
               )
@@ -204,15 +222,31 @@ class _CoreServices extends StatelessWidget {
     const List<ServiceItem> services = ContentRepository.services;
 
     return Container(
-      color: const Color(0xFFF0F2F4),
+      color: const Color(0xFFF5F7F9),
       child: ContentContainer(
         vertical: AppSpacing.section,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const EyebrowLabel('CORE LOGISTICS'),
-            const SizedBox(height: AppSpacing.md),
-            Text('SERVICES', style: text.headlineLarge),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const EyebrowLabel('REAL-TIME CAPABILITIES'),
+                    const SizedBox(height: AppSpacing.md),
+                    Text(
+                      'CORE LOGISTICS\nSERVICES',
+                      style: text.headlineLarge
+                          ?.copyWith(fontWeight: FontWeight.w800),
+                    ),
+                  ],
+                ),
+                if (!isMobile) const _HeaderLink(label: 'VIEW ALL SERVICES'),
+              ],
+            ),
             const SizedBox(height: AppSpacing.xl),
             if (isMobile)
               Column(
@@ -243,7 +277,6 @@ class _CoreServices extends StatelessWidget {
 
 class _ServiceCard extends StatelessWidget {
   const _ServiceCard({required this.service});
-
   final ServiceItem service;
 
   @override
@@ -251,7 +284,7 @@ class _ServiceCard extends StatelessWidget {
     final TextTheme text = Theme.of(context).textTheme;
 
     return SizedBox(
-      height: 340,
+      height: 420,
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -260,23 +293,24 @@ class _ServiceCard extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
-                end: Alignment.center,
+                end: Alignment.topCenter,
                 colors: <Color>[
-                  AppColors.black.withValues(alpha: 0.88),
-                  AppColors.black.withValues(alpha: 0.05),
+                  AppColors.black.withValues(alpha: 0.85),
+                  AppColors.black.withValues(alpha: 0.0),
                 ],
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(AppSpacing.xl),
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Text(
                 service.title.toUpperCase(),
-                style: text.titleLarge?.copyWith(
+                style: text.titleMedium?.copyWith(
                   color: AppColors.white,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.2,
                 ),
               ),
             ),
@@ -303,47 +337,48 @@ class _PortfolioSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const EyebrowLabel('STRATEGIC OPERATIONS'),
+            const EyebrowLabel('OPERATIONAL SHOWCASE'),
             const SizedBox(height: AppSpacing.md),
-            if (isMobile)
-              Column(
-                children: <Widget>[
-                  Text('PORTFOLIO OF SCALE', style: text.headlineLarge),
-                  const SizedBox(height: AppSpacing.md),
-                  Text(
-                    'Our track record spans continents, managing the movement '
-                    'of essential cargo through the world\'s most sophisticated '
-                    'transit hubs.',
-                    style: text.bodyMedium,
-                  ),
-                ],
-              )
-            else
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      'PORTFOLIO OF SCALE',
-                      style: text.headlineLarge,
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.xl),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: AppSpacing.xs),
-                      child: Text(
-                        'Our track record spans continents, managing the '
-                        'movement of essential cargo through the world\'s most '
-                        'sophisticated transit hubs with 4PL Integrated '
-                        'Logistics.',
-                        style: text.bodyMedium,
+            isMobile
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'PORTFOLIO OF SCALE',
+                        style: text.headlineLarge
+                            ?.copyWith(fontWeight: FontWeight.w800),
                       ),
-                    ),
+                      const SizedBox(height: AppSpacing.md),
+                      Text(
+                        'Our track record spans continents, managing the movement of essential cargo through the world\'s most sophisticated transit hubs.',
+                        style: text.bodyMedium
+                            ?.copyWith(color: AppColors.textTertiary),
+                      ),
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          'PORTFOLIO OF SCALE',
+                          style: text.headlineLarge
+                              ?.copyWith(fontWeight: FontWeight.w800),
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.xl),
+                      Expanded(
+                        child: Text(
+                          'Our track record spans continents, managing the movement of essential cargo through the world\'s most sophisticated transit hubs with 4PL Integrated Logistics.',
+                          style: text.bodyMedium?.copyWith(
+                            color: AppColors.textTertiary,
+                            height: 1.5,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            const SizedBox(height: AppSpacing.xl),
+            const SizedBox(height: AppSpacing.xxl),
             _PortfolioGrid(isMobile: isMobile),
           ],
         ),
@@ -354,7 +389,6 @@ class _PortfolioSection extends StatelessWidget {
 
 class _PortfolioGrid extends StatelessWidget {
   const _PortfolioGrid({required this.isMobile});
-
   final bool isMobile;
 
   @override
@@ -365,34 +399,36 @@ class _PortfolioGrid extends StatelessWidget {
         children: <Widget>[
           for (int i = 0; i < items.length; i++)
             Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.md),
-              child: _PortfolioCard(item: items[i], height: 260),
+              padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+              child: _PortfolioCard(item: items[i], height: 280),
             ),
         ],
       );
     }
     return Column(
       children: <Widget>[
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Expanded(flex: 3, child: _PortfolioCard(item: items[0])),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(flex: 2, child: _PortfolioCard(item: items[1])),
-            ],
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              flex: 3,
+              child: _PortfolioCard(item: items[0], height: 460),
+            ),
+            const SizedBox(width: AppSpacing.lg),
+            Expanded(
+              flex: 2,
+              child: _PortfolioCard(item: items[1], height: 460),
+            ),
+          ],
         ),
-        const SizedBox(height: AppSpacing.md),
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Expanded(child: _PortfolioCard(item: items[2])),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(child: _PortfolioCard(item: items[3])),
-            ],
-          ),
+        const SizedBox(height: AppSpacing.lg),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(child: _PortfolioCard(item: items[2], height: 320)),
+            const SizedBox(width: AppSpacing.lg),
+            Expanded(child: _PortfolioCard(item: items[3], height: 320)),
+          ],
         ),
       ],
     );
@@ -400,8 +436,7 @@ class _PortfolioGrid extends StatelessWidget {
 }
 
 class _PortfolioCard extends StatelessWidget {
-  const _PortfolioCard({required this.item, this.height = 320});
-
+  const _PortfolioCard({required this.item, required this.height});
   final PortfolioItem item;
   final double height;
 
@@ -418,16 +453,16 @@ class _PortfolioCard extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
-                end: Alignment.center,
+                end: Alignment.topCenter,
                 colors: <Color>[
-                  AppColors.black.withValues(alpha: 0.82),
-                  AppColors.black.withValues(alpha: 0.05),
+                  AppColors.black.withValues(alpha: 0.85),
+                  AppColors.black.withValues(alpha: 0.1),
                 ],
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+            padding: const EdgeInsets.all(AppSpacing.xl),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -439,27 +474,26 @@ class _PortfolioCard extends StatelessWidget {
                   ),
                   color: AppColors.accent,
                   child: Text(
-                    item.tag,
+                    item.tag.toUpperCase(),
                     style: text.labelMedium?.copyWith(
                       color: AppColors.white,
-                      letterSpacing: 1.2,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.sm + 2),
+                const SizedBox(height: AppSpacing.md),
                 Text(
                   item.title,
-                  style: text.headlineMedium?.copyWith(
+                  style: text.titleLarge?.copyWith(
                     color: AppColors.white,
-                    fontSize: 19,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   item.description,
-                  style: text.bodyMedium?.copyWith(
-                    color: AppColors.textOnDarkSecondary,
-                  ),
+                  style: text.bodyMedium
+                      ?.copyWith(color: AppColors.textOnDarkSecondary),
                 ),
               ],
             ),
@@ -479,50 +513,36 @@ class _EngineeringReach extends StatelessWidget {
     final bool isMobile = AppBreakpoints.isMobile(width);
     final TextTheme text = Theme.of(context).textTheme;
 
-    final Widget left = Padding(
-      padding: EdgeInsets.only(right: isMobile ? 0 : AppSpacing.xl),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const EyebrowLabel('ENGINEERING'),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            'GLOBAL\nREACH.',
-            style: text.headlineLarge,
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          Text(
-            'We are architects of global infrastructure. Every hub, vessel, '
-            'and sortation center is engineered for operational transparency '
-            'at scale. Our integrated network moves over 12 million metric '
-            'tons annually with 99.9% reliability.',
-            style: text.bodyMedium,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            'From predictive routing algorithms to automated customs '
-            'clearance, our technology stack delivers end-to-end visibility '
-            'across the entire fulfillment lifecycle.',
-            style: text.bodyMedium,
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          MxButton(
-            label: 'Explore Global Network',
-            filled: true,
-            onPressed: () {},
-          ),
-        ],
-      ),
+    final Widget left = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        const EyebrowLabel('ENGINEERING'),
+        const SizedBox(height: AppSpacing.md),
+        Text(
+          'ENGINEERING GLOBAL\nREACH.',
+          style: text.headlineLarge?.copyWith(fontWeight: FontWeight.w800),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        Text(
+          'We are architects of global infrastructure. Every hub, vessel, and sortation center is engineered for operational transparency at scale. Our integrated network moves over 12 million metric tons annually with 99.9% reliability.',
+          style: text.bodyMedium
+              ?.copyWith(color: AppColors.textTertiary, height: 1.5),
+        ),
+        const SizedBox(height: AppSpacing.xl),
+        MxButton(
+          label: 'EXPLORE GLOBAL NETWORK',
+          filled: true,
+          onPressed: () {},
+        ),
+      ],
     );
 
     final Widget right = AspectRatio(
       aspectRatio: 4 / 3,
-      child: ClipRect(
-        child: SafeNetworkImage(
-          url: ContentRepository.services[1].imageUrl,
-          onDark: false,
-        ),
+      child: SafeNetworkImage(
+        url: ContentRepository.services[1].imageUrl,
+        onDark: false,
       ),
     );
 
@@ -534,15 +554,14 @@ class _EngineeringReach extends StatelessWidget {
             ? Column(
                 children: <Widget>[
                   left,
-                  const SizedBox(height: AppSpacing.xl),
+                  const SizedBox(height: AppSpacing.xxl),
                   right,
                 ],
               )
             : Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Expanded(child: left),
-                  const SizedBox(width: AppSpacing.xl),
+                  const SizedBox(width: AppSpacing.section),
                   Expanded(child: right),
                 ],
               ),
@@ -579,13 +598,9 @@ class _QuickInquiryFormState extends State<_QuickInquiryForm> {
     final bool isMobile = AppBreakpoints.isMobile(width);
     final TextTheme text = Theme.of(context).textTheme;
 
-    final Widget form = Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    final Widget formFields = Column(
       children: <Widget>[
-        _FormField(
-          controller: _nameController,
-          hint: 'Full Name',
-        ),
+        _FormField(controller: _nameController, hint: 'Full Name'),
         const SizedBox(height: AppSpacing.lg),
         _FormField(
           controller: _emailController,
@@ -604,24 +619,24 @@ class _QuickInquiryFormState extends State<_QuickInquiryForm> {
           hint: 'Message',
           maxLines: 3,
         ),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: AppSpacing.xl),
         SizedBox(
-          height: 52,
+          width: double.infinity,
+          height: 54,
           child: FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.white,
               foregroundColor: AppColors.black,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.zero,
-              ),
+              shape:
+                  const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
             ),
             onPressed: () {},
             child: Text(
               'SUBMIT ENQUIRY',
               style: text.labelLarge?.copyWith(
                 color: AppColors.black,
-                fontSize: 12,
-                letterSpacing: 1.8,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 2.0,
               ),
             ),
           ),
@@ -631,69 +646,60 @@ class _QuickInquiryFormState extends State<_QuickInquiryForm> {
 
     return Container(
       color: AppColors.black,
-      padding: AppSpacing.pageGutter(width).copyWith(
-        top: AppSpacing.section,
-        bottom: AppSpacing.section,
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
-          child: isMobile
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'QUICK\nINQUIRY.',
-                      style: text.displayMedium?.copyWith(
-                        color: AppColors.white,
-                      ),
+      child: ContentContainer(
+        vertical: AppSpacing.section,
+        child: isMobile
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'QUICK\nINQUIRY.',
+                    style: text.displayMedium?.copyWith(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w800,
                     ),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(
-                      'Have a specific logistics challenge? Reach out to our '
-                      'global team for a tailored solution.',
-                      style: text.bodyMedium?.copyWith(
-                        color: AppColors.textOnDarkSecondary,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.xl),
-                    form,
-                  ],
-                )
-              : Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: AppSpacing.xl),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'QUICK\nINQUIRY.',
-                              style: text.displayMedium?.copyWith(
-                                color: AppColors.white,
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.md),
-                            Text(
-                              'Have a specific logistics challenge? Reach out '
-                              'to our global team for a tailored solution that '
-                              'meets your scale and precision requirements.',
-                              style: text.bodyMedium?.copyWith(
-                                color: AppColors.textOnDarkSecondary,
-                              ),
-                            ),
-                          ],
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  Text(
+                    'Have a logistics challenge? Reach out for a tailored solution.',
+                    style: text.bodyMedium
+                        ?.copyWith(color: AppColors.textOnDarkSecondary),
+                  ),
+                  const SizedBox(height: AppSpacing.xl),
+                  formFields,
+                ],
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    flex: 4,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'QUICK\nINQUIRY.',
+                          style: text.displayMedium?.copyWith(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w800,
+                            height: 1.1,
+                          ),
                         ),
-                      ),
+                        const SizedBox(height: AppSpacing.md),
+                        Text(
+                          'Have a specific logistics challenge? Reach out to our global team for a tailored solution that meets your scale and precision requirements.',
+                          style: text.bodyMedium?.copyWith(
+                            color: AppColors.textOnDarkSecondary,
+                            height: 1.5,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: AppSpacing.section),
-                    Expanded(flex: 5, child: form),
-                  ],
-                ),
-        ),
+                  ),
+                  const SizedBox(width: AppSpacing.section),
+                  Expanded(flex: 6, child: formFields),
+                ],
+              ),
       ),
     );
   }
@@ -706,7 +712,6 @@ class _FormField extends StatelessWidget {
     this.maxLines = 1,
     this.keyboardType,
   });
-
   final TextEditingController controller;
   final String hint;
   final int maxLines;
@@ -719,24 +724,46 @@ class _FormField extends StatelessWidget {
       controller: controller,
       maxLines: maxLines,
       keyboardType: keyboardType,
-      textCapitalization: maxLines > 1
-          ? TextCapitalization.sentences
-          : TextCapitalization.words,
       style: text.bodyLarge?.copyWith(color: AppColors.white),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: text.bodyMedium?.copyWith(
-          color: AppColors.textOnDarkTertiary,
-        ),
+        hintStyle:
+            text.bodyMedium?.copyWith(color: AppColors.textOnDarkTertiary),
         isDense: true,
-        contentPadding: const EdgeInsets.symmetric(vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(vertical: 16),
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: AppColors.borderDark),
         ),
         focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColors.white, width: 1),
+          borderSide: BorderSide(color: AppColors.white, width: 1.5),
         ),
       ),
     );
   }
+}
+
+// Minimal missing component definitions contextually injected helper fallback layout constraints:
+class ContentContainer extends StatelessWidget {
+  final Widget child;
+  final double vertical;
+  const ContentContainer({super.key, required this.child, this.vertical = 0.0});
+
+  @override
+  Widget build(BuildContext context) {
+    final double width = MediaQuery.sizeOf(context).width;
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+        child: Padding(
+          padding: AppSpacing.pageGutter(width)
+              .copyWith(top: vertical, bottom: vertical),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class AppBreakpoints {
+  static bool isMobile(double width) => width < 840;
 }

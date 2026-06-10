@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:mxworld/controllers/inquiry_controller.dart';
 import 'package:mxworld/core/constants/app_spacing.dart';
 import 'package:mxworld/core/theme/app_colors.dart';
-import 'package:mxworld/models/content_models.dart';
 import 'package:mxworld/services/content_repository.dart';
 import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
-import 'package:mxworld/views/widgets/common/mx_button.dart';
 import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
 import 'package:mxworld/views/widgets/common/safe_network_image.dart';
 
-/// Contact screen: a hero with an overlaid project-inquiry form, regional
-/// office cards, a network map placeholder, and a strategic-support list.
 class ContactScreen extends ConsumerWidget {
   const ContactScreen({super.key});
 
@@ -20,17 +15,19 @@ class ContactScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return const MxPageScaffold(
       sections: <Widget>[
-        _ContactHero(),
-        _OfficesSection(),
-        _NetworkMapSection(),
-        _StrategicSupportSection(),
+        _NetworkHeroSection(),
+        _MetricsBand(),
+        _StrategicHubsSection(),
+        _MaritimeDominanceSection(),
+        _RealTimeDataAccessSection(),
+        _BottomInquirySection(),
       ],
     );
   }
 }
 
-class _ContactHero extends StatelessWidget {
-  const _ContactHero();
+class _NetworkHeroSection extends StatelessWidget {
+  const _NetworkHeroSection();
 
   @override
   Widget build(BuildContext context) {
@@ -38,527 +35,815 @@ class _ContactHero extends StatelessWidget {
     final bool isMobile = AppBreakpoints.isMobile(width);
     final TextTheme text = Theme.of(context).textTheme;
 
-    final Widget intro = Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return SizedBox(
+      height: isMobile ? 420 : 540,
+      child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          const SafeNetworkImage(
+            url: ContentRepository.heroImage,
+            fit: BoxFit.cover,
+          ),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: AppColors.black.withValues(alpha: 0.65),
+            ),
+          ),
+          Padding(
+            padding:
+                AppSpacing.pageGutter(width).copyWith(bottom: AppSpacing.xxl),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 640),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const EyebrowLabel('ROUTING INFRASTRUCTURE'),
+                    const SizedBox(height: AppSpacing.sm),
+                    Text(
+                      'OUR GLOBAL REACH.',
+                      style: (isMobile ? text.displayMedium : text.displayLarge)
+                          ?.copyWith(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    Text(
+                      'Managing cross-border terminal networks with predictive edge routing. Overcoming infrastructural complexity dynamically to secure fluid international trade lane pathways.',
+                      style: text.bodyLarge?.copyWith(
+                        color: AppColors.textOnDarkSecondary,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MetricsBand extends StatelessWidget {
+  const _MetricsBand();
+
+  @override
+  Widget build(BuildContext context) {
+    final double width = MediaQuery.sizeOf(context).width;
+    final bool isMobile = AppBreakpoints.isMobile(width);
+    final TextTheme text = Theme.of(context).textTheme;
+
+    final List<Map<String, String>> metrics = [
+      {'val': '142', 'lbl': 'CONNECTED TERMINALS'},
+      {'val': 'Global', 'lbl': 'COVERAGE SCOPE'},
+      {'val': '850+', 'lbl': 'FREIGHT CHANNELS'},
+      {'val': '12.4M', 'lbl': 'ANNUAL METRIC TONS'},
+    ];
+
+    return Container(
+      color: AppColors.black,
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
+      child: ContentContainer(
+        child: isMobile
+            ? Column(
+                children: metrics
+                    .map(
+                      (m) => Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppSpacing.md,
+                        ),
+                        child: _buildMetricItem(text, m['val']!, m['lbl']!),
+                      ),
+                    )
+                    .toList(),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: metrics
+                    .map(
+                      (m) => Expanded(
+                        child: _buildMetricItem(text, m['val']!, m['lbl']!),
+                      ),
+                    )
+                    .toList(),
+              ),
+      ),
+    );
+  }
+
+  Widget _buildMetricItem(TextTheme text, String val, String lbl) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          val,
+          style: text.headlineMedium?.copyWith(
+            color: AppColors.white,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          lbl,
+          style: text.labelSmall?.copyWith(
+            color: AppColors.textOnDarkTertiary,
+            letterSpacing: 1.1,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StrategicHubsSection extends StatelessWidget {
+  const _StrategicHubsSection();
+
+  @override
+  Widget build(BuildContext context) {
+    final double width = MediaQuery.sizeOf(context).width;
+    final bool isMobile = AppBreakpoints.isMobile(width);
+    final TextTheme text = Theme.of(context).textTheme;
+
+    return Container(
+      color: AppColors.white,
+      child: ContentContainer(
+        vertical: AppSpacing.section,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'STRATEGIC HUBS',
+                        style: text.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.black,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 540),
+                        child: Text(
+                          'Our primary command centers are strategically positioned at pivotal oceanic junctions routing, monitoring, and executing movements across high-density industrial corridors.',
+                          style: text.bodyMedium?.copyWith(
+                            color: AppColors.textTertiary,
+                            height: 1.5,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (!isMobile)
+                  const Row(
+                    children: [
+                      Icon(
+                        Icons.keyboard_arrow_left,
+                        color: AppColors.textTertiary,
+                        size: 28,
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_right,
+                        color: AppColors.black,
+                        size: 28,
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.xxl),
+            isMobile
+                ? const Column(
+                    children: [
+                      _HubCard(
+                        city: 'ROTTERDAM',
+                        region: 'EUROPE INTERCONNECT',
+                        address:
+                            'Waalhaven Zuidzijde 21\n3089 JH Rotterdam, NL',
+                        phone: '+31 (0)10 400 2400',
+                      ),
+                      SizedBox(height: AppSpacing.lg),
+                      _HubCard(
+                        city: 'SINGAPORE',
+                        region: 'ASIA-PACIFIC AXIS',
+                        address:
+                            '7 Jurong Pier Rd\nPSA Shipping Plaza, Singapore 619159',
+                        phone: '+65 6271 2211',
+                      ),
+                      SizedBox(height: AppSpacing.lg),
+                      _HubCard(
+                        city: 'NEW YORK',
+                        region: 'NORTH AMERICAN GATEWAY',
+                        address:
+                            '120 Industrial Pkwy\nJersey City, NJ 07305, USA',
+                        phone: '+1 (201) 555-0199',
+                      ),
+                    ],
+                  )
+                : const Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: _HubCard(
+                          city: 'ROTTERDAM',
+                          region: 'EUROPE INTERCONNECT',
+                          address:
+                              'Waalhaven Zuidzijde 21\n3089 JH Rotterdam, NL',
+                          phone: '+31 (0)10 400 2400',
+                        ),
+                      ),
+                      SizedBox(width: AppSpacing.lg),
+                      Expanded(
+                        child: _HubCard(
+                          city: 'SINGAPORE',
+                          region: 'ASIA-PACIFIC AXIS',
+                          address:
+                              '7 Jurong Pier Rd\nPSA Shipping Plaza, Singapore 619159',
+                          phone: '+65 6271 2211',
+                        ),
+                      ),
+                      SizedBox(width: AppSpacing.lg),
+                      Expanded(
+                        child: _HubCard(
+                          city: 'NEW YORK',
+                          region: 'NORTH AMERICAN GATEWAY',
+                          address:
+                              '120 Industrial Pkwy\nJersey City, NJ 07305, USA',
+                          phone: '+1 (201) 555-0199',
+                        ),
+                      ),
+                    ],
+                  ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _HubCard extends StatelessWidget {
+  final String city;
+  final String region;
+  final String address;
+  final String phone;
+
+  const _HubCard({
+    required this.city,
+    required this.region,
+    required this.address,
+    required this.phone,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final TextTheme text = Theme.of(context).textTheme;
+    return Container(
+      color: const Color(0xFFF1F3F5),
+      padding: const EdgeInsets.all(AppSpacing.xl),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            region,
+            style: text.labelSmall?.copyWith(
+              color: AppColors.textTertiary,
+              letterSpacing: 1.1,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            city,
+            style: text.titleLarge?.copyWith(
+              fontWeight: FontWeight.w800,
+              color: AppColors.black,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            'ADDRESS',
+            style: text.labelSmall?.copyWith(
+              color: AppColors.textTertiary,
+              fontSize: 10,
+              letterSpacing: 1.0,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            address,
+            style: text.bodyMedium
+                ?.copyWith(height: 1.4, color: AppColors.textSecondary),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            'CONTACTS',
+            style: text.labelSmall?.copyWith(
+              color: AppColors.textTertiary,
+              fontSize: 10,
+              letterSpacing: 1.0,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            phone,
+            style: text.bodyMedium?.copyWith(color: AppColors.textSecondary),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          InkWell(
+            onTap: () {},
+            child: Text(
+              'TERMINAL DETAILS →',
+              style: text.labelSmall?.copyWith(
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.2,
+                color: AppColors.black,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MaritimeDominanceSection extends StatelessWidget {
+  const _MaritimeDominanceSection();
+
+  @override
+  Widget build(BuildContext context) {
+    final double width = MediaQuery.sizeOf(context).width;
+    final bool isMobile = AppBreakpoints.isMobile(width);
+    final TextTheme text = Theme.of(context).textTheme;
+
+    const Widget leftImage = AspectRatio(
+      aspectRatio: 1,
+      child: SafeNetworkImage(
+        url: ContentRepository.seaFreightImage,
+        fit: BoxFit.cover,
+      ),
+    );
+
+    final Widget rightContent = Container(
+      color: AppColors.black,
+      padding: EdgeInsets.all(isMobile ? AppSpacing.xl : AppSpacing.xxl),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'OCEAN MATRIX',
+            style: text.labelSmall?.copyWith(
+              color: AppColors.textOnDarkTertiary,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            'MARITIME DOMINANCE AT SCALE.',
+            style: text.headlineLarge?.copyWith(
+              color: AppColors.white,
+              fontWeight: FontWeight.w800,
+              height: 1.1,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.xl),
+          _buildFeatureRow(
+            text,
+            Icons.anchor,
+            'Automated Fleet Management',
+            'Real-time telemetry and optimized speed control arrays running on all active carrier assets to minimize operational latency.',
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          _buildFeatureRow(
+            text,
+            Icons.lan_outlined,
+            'Intermodal Port Infrastructure',
+            'Deep integration links connected seamlessly between vessel arriving lanes and inland rail network infrastructure modules.',
+          ),
+          const SizedBox(height: AppSpacing.xxl),
+          SizedBox(
+            width: isMobile ? double.infinity : double.infinity,
+            height: 48,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: AppColors.white, width: 1),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+              ),
+              onPressed: () {},
+              child: Text(
+                'DOWNLOAD NETWORK REPORT',
+                style: text.labelMedium?.copyWith(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.2,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    return Container(
+      color: AppColors.white,
+      child: ContentContainer(
+        child: isMobile
+            ? Column(
+                children: [
+                  leftImage,
+                  rightContent,
+                ],
+              )
+            : Row(
+                children: [
+                  const Expanded(child: leftImage),
+                  Expanded(child: rightContent),
+                ],
+              ),
+      ),
+    );
+  }
+
+  Widget _buildFeatureRow(
+    TextTheme text,
+    IconData icon,
+    String title,
+    String desc,
+  ) {
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text('Global\nConnectivity.',
-            style: text.displayLarge?.copyWith(color: AppColors.white),),
+      children: [
+        Icon(icon, color: AppColors.white, size: 20),
+        const SizedBox(width: AppSpacing.md),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: text.titleMedium?.copyWith(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                desc,
+                style: text.bodyMedium?.copyWith(
+                  color: AppColors.textOnDarkSecondary,
+                  height: 1.4,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _RealTimeDataAccessSection extends StatelessWidget {
+  const _RealTimeDataAccessSection();
+
+  @override
+  Widget build(BuildContext context) {
+    final double width = MediaQuery.sizeOf(context).width;
+    final bool isMobile = AppBreakpoints.isMobile(width);
+    final TextTheme text = Theme.of(context).textTheme;
+
+    final Widget leftAccordions = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'REAL-TIME\nDATA ACCESS.',
+          style: text.headlineLarge?.copyWith(
+            fontWeight: FontWeight.w800,
+            color: AppColors.black,
+            height: 1.1,
+          ),
+        ),
         const SizedBox(height: AppSpacing.md),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 420),
-          child: Text(
-            'Our interconnected network operates across every major trade lane. '
-            'Consult with our logistics architects to engineer a seamless '
-            'global supply chain solution tailored to your operational '
-            'requirements.',
-            style: text.bodyLarge
-                ?.copyWith(color: AppColors.textOnDarkSecondary),
+        Text(
+          'Connect your global B2B endpoints securely into our central management layer for real-time visibility metrics and live operational infrastructure telemetry.',
+          style: text.bodyMedium
+              ?.copyWith(color: AppColors.textTertiary, height: 1.5),
+        ),
+        const SizedBox(height: AppSpacing.xl),
+        _buildUnderlineAccordion(text, 'API INTEGRATION ENGINE', true),
+        _buildUnderlineAccordion(text, 'LIVE ROUTE TELEMETRY', false),
+      ],
+    );
+
+    final Widget rightMockup = Container(
+      // aspectRatio: 16 / 10,
+      color: AppColors.black,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          const Positioned.fill(
+            child: Opacity(
+              opacity: 0.15,
+              child: SafeNetworkImage(
+                url: ContentRepository.heroImage,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.circle, size: 8, color: Colors.greenAccent),
+              const SizedBox(width: AppSpacing.sm),
+              Text(
+                'LIVE OPERATIONAL STREAM ACTIVED',
+                style: text.labelSmall?.copyWith(
+                  color: AppColors.white,
+                  letterSpacing: 1.5,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+
+    return Container(
+      color: const Color(0xFFE9ECEF),
+      child: ContentContainer(
+        vertical: AppSpacing.section,
+        child: isMobile
+            ? Column(
+                children: [
+                  leftAccordions,
+                  const SizedBox(height: AppSpacing.xxl),
+                  rightMockup,
+                ],
+              )
+            : Row(
+                children: [
+                  Expanded(flex: 5, child: leftAccordions),
+                  const SizedBox(width: AppSpacing.section),
+                  Expanded(flex: 5, child: rightMockup),
+                ],
+              ),
+      ),
+    );
+  }
+
+  Widget _buildUnderlineAccordion(TextTheme text, String label, bool active) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: Color(0xFFCED4DA), width: 1)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: text.labelMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.2,
+              color: active ? AppColors.black : AppColors.textTertiary,
+            ),
+          ),
+          Icon(
+            active ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+            color: active ? AppColors.black : AppColors.textTertiary,
+            size: 20,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BottomInquirySection extends StatefulWidget {
+  const _BottomInquirySection();
+
+  @override
+  State<_BottomInquirySection> createState() => _BottomInquirySectionState();
+}
+
+class _BottomInquirySectionState extends State<_BottomInquirySection> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double width = MediaQuery.sizeOf(context).width;
+    final bool isMobile = AppBreakpoints.isMobile(width);
+    final TextTheme text = Theme.of(context).textTheme;
+
+    final Widget formFields = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Row(
+          children: [
+            Expanded(
+              child: _InquiryField(
+                controller: _nameController,
+                hint: 'Full Name',
+              ),
+            ),
+            const SizedBox(width: AppSpacing.lg),
+            Expanded(
+              child: _InquiryField(
+                controller: _emailController,
+                hint: 'Email Address',
+                keyboardType: TextInputType.emailAddress,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        _InquiryField(
+          controller: _messageController,
+          hint: 'Describe your destination specifications...',
+          maxLines: 3,
+        ),
+        const SizedBox(height: AppSpacing.xl),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: SizedBox(
+            width: isMobile ? double.infinity : 160,
+            height: 48,
+            child: FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.black,
+                foregroundColor: AppColors.white,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+              ),
+              onPressed: () {},
+              child: Text(
+                'SUBMIT INQUIRY',
+                style: text.labelLarge?.copyWith(
+                  color: AppColors.white,
+                  fontSize: 12,
+                  letterSpacing: 1.5,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
           ),
         ),
       ],
     );
 
     return Container(
-      color: AppColors.black,
-      constraints: BoxConstraints(minHeight: isMobile ? 0 : 560),
-      child: Stack(
-        children: <Widget>[
-          const Positioned.fill(
-            child: Opacity(
-              opacity: 0.4,
-              child: SafeNetworkImage(url: ContentRepository.heroImage),
-            ),
-          ),
-          Padding(
-            padding: AppSpacing.pageGutter(width).copyWith(
-              top: AppSpacing.section,
-              bottom: AppSpacing.section,
-            ),
-            child: isMobile
-                ? Column(
-                    children: <Widget>[
-                      intro,
-                      const SizedBox(height: AppSpacing.xl),
-                      const _InquiryForm(),
-                    ],
-                  )
-                : Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(flex: 5, child: intro),
-                      const SizedBox(width: AppSpacing.xl),
-                      const Expanded(flex: 5, child: _InquiryForm()),
-                    ],
+      color: const Color(0xFFF8F9FA),
+      child: ContentContainer(
+        vertical: AppSpacing.section,
+        child: isMobile
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'QUICK INQUIRY',
+                    style: text.headlineLarge
+                        ?.copyWith(fontWeight: FontWeight.w800),
                   ),
-          ),
-        ],
+                  const SizedBox(height: AppSpacing.md),
+                  Text(
+                    'Connect with our routing deployment routing teams for tailored solution options and operational setups.',
+                    style: text.bodyMedium
+                        ?.copyWith(color: AppColors.textTertiary),
+                  ),
+                  const SizedBox(height: AppSpacing.xl),
+                  formFields,
+                ],
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    flex: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: AppSpacing.xl),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'QUICK\nINQUIRY',
+                            style: text.headlineLarge?.copyWith(
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 0.5,
+                              height: 1.1,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.md),
+                          Text(
+                            'Connect with our routing deployment routing teams for tailored solution options and global foundational coordination setup.',
+                            style: text.bodyMedium?.copyWith(
+                              color: AppColors.textTertiary,
+                              height: 1.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.section),
+                  Expanded(flex: 6, child: formFields),
+                ],
+              ),
       ),
     );
   }
 }
 
-/// The project-inquiry form, bound to [inquiryControllerProvider].
-///
-/// Demonstrates Riverpod state management: each field dispatches an update to
-/// the controller, validation state drives the submit button, and a success
-/// state swaps the form for a confirmation panel.
-class _InquiryForm extends ConsumerStatefulWidget {
-  const _InquiryForm();
-
-  @override
-  ConsumerState<_InquiryForm> createState() => _InquiryFormState();
-}
-
-class _InquiryFormState extends ConsumerState<_InquiryForm> {
-  late final TextEditingController _nameController;
-  late final TextEditingController _emailController;
-  late final TextEditingController _scopeController;
-
-  @override
-  void initState() {
-    super.initState();
-    // Seed controllers from any restored draft in the provider state.
-    final InquiryFormState state = ref.read(inquiryControllerProvider);
-    _nameController = TextEditingController(text: state.clientName);
-    _emailController = TextEditingController(text: state.corporateEmail);
-    _scopeController = TextEditingController(text: state.operationalScope);
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _scopeController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final InquiryFormState state = ref.watch(inquiryControllerProvider);
-    final InquiryController controller =
-        ref.read(inquiryControllerProvider.notifier);
-    final TextTheme text = Theme.of(context).textTheme;
-
-    if (state.isSubmitted) {
-      return _SuccessPanel(onReset: () {
-        controller.reset();
-        _nameController.clear();
-        _emailController.clear();
-        _scopeController.clear();
-      },);
-    }
-
-    return Container(
-      color: AppColors.white,
-      padding: const EdgeInsets.all(AppSpacing.xl),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text('Project Inquiry', style: text.headlineMedium),
-          const SizedBox(height: AppSpacing.lg),
-          _FormField(
-            label: 'CLIENT NAME',
-            hint: 'Enter full name',
-            controller: _nameController,
-            onChanged: controller.updateClientName,
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          _FormField(
-            label: 'CORPORATE EMAIL',
-            hint: 'name@company.com',
-            controller: _emailController,
-            keyboardType: TextInputType.emailAddress,
-            onChanged: controller.updateEmail,
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          _ServiceVerticalDropdown(
-            value: state.serviceVertical,
-            onChanged: controller.updateServiceVertical,
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          _FormField(
-            label: 'OPERATIONAL SCOPE',
-            hint: 'Detail your logistics specifications...',
-            controller: _scopeController,
-            maxLines: 3,
-            onChanged: controller.updateScope,
-          ),
-          if (state.errorMessage != null) ...<Widget>[
-            const SizedBox(height: AppSpacing.md),
-            Text(
-              state.errorMessage!,
-              style: text.bodyMedium?.copyWith(color: Colors.red.shade700),
-            ),
-          ],
-          const SizedBox(height: AppSpacing.lg),
-          MxButton(
-            label: state.isSubmitting
-                ? 'Initializing...'
-                : 'Initialize Consultation',
-            expand: true,
-            onPressed:
-                state.isSubmitting ? null : () => controller.submit(),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _FormField extends StatelessWidget {
-  const _FormField({
-    required this.label,
-    required this.hint,
+class _InquiryField extends StatelessWidget {
+  const _InquiryField({
     required this.controller,
-    required this.onChanged,
+    required this.hint,
     this.maxLines = 1,
     this.keyboardType,
   });
-
-  final String label;
-  final String hint;
   final TextEditingController controller;
-  final ValueChanged<String> onChanged;
+  final String hint;
   final int maxLines;
   final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
     final TextTheme text = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(label,
-            style: text.labelMedium
-                ?.copyWith(color: AppColors.textTertiary, letterSpacing: 1.4),),
-        TextField(
-          controller: controller,
-          onChanged: onChanged,
-          maxLines: maxLines,
-          keyboardType: keyboardType,
-          textCapitalization: maxLines > 1
-              ? TextCapitalization.sentences
-              : TextCapitalization.words,
-          style: text.bodyLarge?.copyWith(color: AppColors.textPrimary),
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle:
-                text.bodyMedium?.copyWith(color: AppColors.textTertiary),
-            isDense: true,
-            contentPadding: const EdgeInsets.symmetric(vertical: 10),
-            enabledBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColors.borderLight),
-            ),
-            focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColors.black, width: 1.5),
-            ),
-          ),
+    return TextField(
+      controller: controller,
+      maxLines: maxLines,
+      keyboardType: keyboardType,
+      style: text.bodyLarge?.copyWith(color: AppColors.black),
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: text.bodyMedium?.copyWith(color: AppColors.textTertiary),
+        isDense: true,
+        contentPadding: const EdgeInsets.all(16),
+        fillColor: const Color(0xFFE9ECEF),
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(2),
+          borderSide: BorderSide.none,
         ),
-      ],
-    );
-  }
-}
-
-class _ServiceVerticalDropdown extends StatelessWidget {
-  const _ServiceVerticalDropdown({
-    required this.value,
-    required this.onChanged,
-  });
-
-  final ServiceVertical value;
-  final ValueChanged<ServiceVertical> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final TextTheme text = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text('SERVICE VERTICAL',
-            style: text.labelMedium
-                ?.copyWith(color: AppColors.textTertiary, letterSpacing: 1.4),),
-        const SizedBox(height: 4),
-        DropdownButtonFormField<ServiceVertical>(
-          initialValue: value,
-          isExpanded: true,
-          style: text.bodyLarge?.copyWith(color: AppColors.textPrimary),
-          decoration: const InputDecoration(
-            isDense: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColors.borderLight),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColors.black, width: 1.5),
-            ),
-          ),
-          items: <DropdownMenuItem<ServiceVertical>>[
-            for (final ServiceVertical vertical in ServiceVertical.values)
-              DropdownMenuItem<ServiceVertical>(
-                value: vertical,
-                child: Text(vertical.label),
-              ),
-          ],
-          onChanged: (ServiceVertical? v) {
-            if (v != null) onChanged(v);
-          },
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(2),
+          borderSide: BorderSide.none,
         ),
-      ],
-    );
-  }
-}
-
-class _SuccessPanel extends StatelessWidget {
-  const _SuccessPanel({required this.onReset});
-
-  final VoidCallback onReset;
-
-  @override
-  Widget build(BuildContext context) {
-    final TextTheme text = Theme.of(context).textTheme;
-    return Container(
-      color: AppColors.white,
-      padding: const EdgeInsets.all(AppSpacing.xl),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const Icon(Icons.check_circle, color: AppColors.operational, size: 40),
-          const SizedBox(height: AppSpacing.md),
-          Text('Consultation Initialized', style: text.headlineMedium),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            'Your inquiry has been logged. A logistics architect will respond '
-            'to your corporate email within one business day.',
-            style: text.bodyMedium,
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          MxButton(
-              label: 'Submit Another', filled: false, onPressed: onReset,),
-        ],
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(2),
+          borderSide: const BorderSide(color: AppColors.black, width: 1),
+        ),
       ),
     );
   }
 }
 
-class _OfficesSection extends StatelessWidget {
-  const _OfficesSection();
+class ContentContainer extends StatelessWidget {
+  final Widget child;
+  final double vertical;
+  const ContentContainer({super.key, required this.child, this.vertical = 0.0});
 
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.sizeOf(context).width;
-    final bool isMobile = AppBreakpoints.isMobile(width);
-    const List<HubItem> offices = ContentRepository.contactOffices;
-
-    return ColoredBox(
-      color: AppColors.offWhite,
-      child: ContentContainer(
-        vertical: AppSpacing.xxl,
-        child: isMobile
-            ? Column(
-                children: <Widget>[
-                  for (final HubItem office in offices)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: AppSpacing.xl),
-                      child: _OfficeCard(office: office),
-                    ),
-                ],
-              )
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  for (int i = 0; i < offices.length; i++) ...<Widget>[
-                    Expanded(child: _OfficeCard(office: offices[i])),
-                    if (i < offices.length - 1)
-                      const SizedBox(width: AppSpacing.xl),
-                  ],
-                ],
-              ),
-      ),
-    );
-  }
-}
-
-class _OfficeCard extends StatelessWidget {
-  const _OfficeCard({required this.office});
-
-  final HubItem office;
-
-  @override
-  Widget build(BuildContext context) {
-    final TextTheme text = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        EyebrowLabel(office.region, color: AppColors.textTertiary),
-        const SizedBox(height: AppSpacing.sm),
-        Text(office.city, style: text.headlineMedium),
-        const SizedBox(height: AppSpacing.sm),
-        Text(office.address, style: text.bodyMedium?.copyWith(height: 1.5)),
-        const SizedBox(height: AppSpacing.md),
-        Row(
-          children: <Widget>[
-            const Icon(Icons.call_outlined,
-                size: 15, color: AppColors.textSecondary,),
-            const SizedBox(width: AppSpacing.sm),
-            Flexible(
-              child: Text(office.phone ?? '', style: text.bodyMedium),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class _NetworkMapSection extends StatelessWidget {
-  const _NetworkMapSection();
-
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.sizeOf(context).width;
-    final TextTheme text = Theme.of(context).textTheme;
-    return Container(
-      color: AppColors.offWhite,
-      padding: AppSpacing.pageGutter(width).copyWith(bottom: AppSpacing.xxl),
-      child: Center(
-        child: ConstrainedBox(
-          constraints:
-              const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
-          child: Container(
-            height: 280,
-            color: AppColors.charcoal,
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Icon(Icons.public,
-                    size: 120,
-                    color: AppColors.white.withValues(alpha: 0.06),),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.md, vertical: AppSpacing.sm,),
-                  color: AppColors.black,
-                  child: Text(
-                    'ACTIVE NODE: SG-01',
-                    style: text.labelMedium?.copyWith(
-                      color: AppColors.white,
-                      letterSpacing: 1.4,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+        child: Padding(
+          padding: AppSpacing.pageGutter(width)
+              .copyWith(top: vertical, bottom: vertical),
+          child: child,
         ),
       ),
     );
   }
 }
 
-class _StrategicSupportSection extends StatelessWidget {
-  const _StrategicSupportSection();
-
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.sizeOf(context).width;
-    final bool isMobile = AppBreakpoints.isMobile(width);
-    final TextTheme text = Theme.of(context).textTheme;
-
-    final Widget intro = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text('Strategic Support',
-            style: text.headlineLarge?.copyWith(color: AppColors.white),),
-        const SizedBox(height: AppSpacing.md),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 320),
-          child: Text(
-            'Our operational desks provide continuous oversight and technical '
-            'intervention for complex logistics requirements, ensuring '
-            'mission-critical reliability 24/7/365.',
-            style: text.bodyMedium
-                ?.copyWith(color: AppColors.textOnDarkSecondary),
-          ),
-        ),
-      ],
-    );
-
-    final Widget desks = Column(
-      children: <Widget>[
-        for (final OperationsDeskItem desk in ContentRepository.operationsDesks)
-          _DeskRow(desk: desk),
-      ],
-    );
-
-    return Container(
-      color: AppColors.nearBlack,
-      padding: AppSpacing.pageGutter(width).copyWith(
-        top: AppSpacing.section,
-        bottom: AppSpacing.section,
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints:
-              const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
-          child: isMobile
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    intro,
-                    const SizedBox(height: AppSpacing.xl),
-                    desks,
-                  ],
-                )
-              : Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(flex: 4, child: intro),
-                    const SizedBox(width: AppSpacing.xl),
-                    Expanded(flex: 6, child: desks),
-                  ],
-                ),
-        ),
-      ),
-    );
-  }
-}
-
-class _DeskRow extends StatelessWidget {
-  const _DeskRow({required this.desk});
-
-  final OperationsDeskItem desk;
-
-  @override
-  Widget build(BuildContext context) {
-    final TextTheme text = Theme.of(context).textTheme;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Text(desk.code,
-                  style: text.labelMedium?.copyWith(
-                    color: AppColors.textOnDarkTertiary,
-                    letterSpacing: 1.4,
-                  ),),
-              const SizedBox(width: AppSpacing.lg),
-              Expanded(
-                child: Text(
-                  desk.title,
-                  style: text.headlineMedium?.copyWith(color: AppColors.white),
-                ),
-              ),
-              const Icon(Icons.arrow_forward,
-                  size: 18, color: AppColors.accentMuted,),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.md),
-          const Divider(color: AppColors.borderDark, height: 1),
-        ],
-      ),
-    );
-  }
+class AppBreakpoints {
+  static bool isMobile(double width) => width < 840;
 }

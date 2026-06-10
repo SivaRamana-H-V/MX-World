@@ -2,7 +2,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../views/screens/about/about_screen.dart';
 import '../../views/screens/contact/contact_screen.dart';
-import '../../views/screens/global_network/global_network_screen.dart';
 import '../../views/screens/home/home_screen.dart';
 import '../../views/screens/services/services_screen.dart';
 import '../../views/screens/splash/splash_screen.dart';
@@ -61,13 +60,6 @@ abstract final class AppRouter {
             pageBuilder: (context, state) => AppTransitions.goRouterPage(
               state: state,
               child: const ServicesScreen(),
-            ),
-          ),
-          GoRoute(
-            path: '/network',
-            pageBuilder: (context, state) => AppTransitions.goRouterPage(
-              state: state,
-              child: const GlobalNetworkScreen(),
             ),
           ),
           GoRoute(
