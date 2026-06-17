@@ -1,11 +1,11 @@
 {
-    "name": "mxworld",
-    "short_name": "mxworld",
+    "name": "MX WORLD GLOBAL LOGISTICS",
+    "short_name": "MX World",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#0A0A0B",
+    "theme_color": "#0A0A0B",
+    "description": "A global leader in freight forwarding and supply chain management. Engineering the future of trade through data-driven precision.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
