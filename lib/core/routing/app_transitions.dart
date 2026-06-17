@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 abstract final class AppTransitions {
   const AppTransitions._();
 
-  static const Duration _duration = Duration(milliseconds: 250);
+  static const Duration _duration = Duration(milliseconds: 150);
   static const Curve _curve = Curves.fastOutSlowIn;
 
   static Widget _slide(Animation<double> animation, Widget child) {

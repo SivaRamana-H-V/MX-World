@@ -14,7 +14,7 @@ abstract final class ContentRepository {
   static const String _warehouse =
       'https://images.unsplash.com/photo-1553413077-190dd305871c?w=1200&q=80';
   static const String _airCargo =
-      'https://www.consultancy-me.com/illustrations/news/detail/2024-10-09-090427457-Six_strategic_areas_of_focus_for_expanding_air_cargo_business_detail.jpg';
+      'https://images.unsplash.com/photo-1774698078446-59299e016718?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
   static const String _containerShip =
       'https://images.unsplash.com/photo-1605281317010-fe5ffe798166?w=1200&q=80';
   static const String _terminal =
@@ -193,26 +193,13 @@ abstract final class ContentRepository {
 
   static const List<HubItem> contactOffices = <HubItem>[
     HubItem(
-      region: 'EMEA HEADQUARTERS',
-      city: 'Rotterdam',
-      address: 'Prinses Beatrixlaan 5\n2595 AK Den Haag, Netherlands',
-      capacity: '',
-      phone: '+31 (0) 70 344 0000',
-    ),
-    HubItem(
-      region: 'APAC COMMAND CENTER',
-      city: 'Singapore',
-      address: '78 Shenton Way, Tower 1\nSingapore 079120',
-      capacity: '',
-      phone: '+65 6220 1234',
-    ),
-    HubItem(
-      region: 'AMERICAS REGIONAL HUB',
-      city: 'New York',
+      region: 'HEADQUARTERS',
+      city: 'COIMBATORE',
       address:
-          '150 Greenwich St, 4 World Trade Center\nNew York, NY 10007, USA',
+          '141, EB Colony Ponnairajpuram,\nPalaniappa Nagar, Coimbatore-641001',
       capacity: '',
-      phone: '+1 212 555 0198',
+      phone: '+91 83004 47268',
+      email: 'lokeshkiran@mxworld.in',
     ),
   ];
 

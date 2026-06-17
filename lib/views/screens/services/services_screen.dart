@@ -4,6 +4,7 @@ import 'package:mxworld/core/constants/app_spacing.dart';
 import 'package:mxworld/core/theme/app_colors.dart';
 import 'package:mxworld/services/content_repository.dart';
 import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
+import 'package:mxworld/views/widgets/common/inquiry_form.dart';
 import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
 import 'package:mxworld/views/widgets/common/safe_network_image.dart';
 
@@ -89,7 +90,7 @@ class ServicesScreen extends StatelessWidget {
             'Regional Distribution Warehousing',
           ],
         ),
-        _QuickInquiryForm(),
+        InquiryForm(),
       ],
     );
   }
@@ -325,34 +326,3 @@ class _SubServiceItem extends StatelessWidget {
   }
 }
 
-// Global quick component scaffolding structure properties fallbacks:
-class _QuickInquiryForm extends StatelessWidget {
-  const _QuickInquiryForm();
-  @override
-  Widget build(BuildContext context) => const SizedBox.shrink();
-}
-
-class ContentContainer extends StatelessWidget {
-  final Widget child;
-  final double vertical;
-  const ContentContainer({super.key, required this.child, this.vertical = 0.0});
-
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.sizeOf(context).width;
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
-        child: Padding(
-          padding: AppSpacing.pageGutter(width)
-              .copyWith(top: vertical, bottom: vertical),
-          child: child,
-        ),
-      ),
-    );
-  }
-}
-
-class AppBreakpoints {
-  static bool isMobile(double width) => width < 840;
-}

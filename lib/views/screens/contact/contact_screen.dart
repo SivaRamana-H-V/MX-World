@@ -7,8 +7,10 @@ import 'package:mxworld/services/content_repository.dart';
 import 'package:mxworld/views/widgets/common/animated_counter.dart';
 import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
 import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
+import 'package:mxworld/views/widgets/common/inquiry_form.dart';
 import 'package:mxworld/views/widgets/common/reveal_on_scroll.dart';
 import 'package:mxworld/views/widgets/common/safe_network_image.dart';
+import 'package:mxworld/views/widgets/common/under_development.dart';
 
 class ContactScreen extends ConsumerWidget {
   const ContactScreen({super.key});
@@ -22,7 +24,7 @@ class ContactScreen extends ConsumerWidget {
         _StrategicHubsSection(),
         _MaritimeDominanceSection(),
         _RealTimeDataAccessSection(),
-        _BottomInquirySection(),
+        InquiryForm(),
       ],
     );
   }
@@ -196,7 +198,7 @@ class _StrategicHubsSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'STRATEGIC HUBS',
+                          'HEADQUARTERS',
                           style: text.headlineMedium?.copyWith(
                             fontWeight: FontWeight.w800,
                             color: AppColors.black,
@@ -206,7 +208,7 @@ class _StrategicHubsSection extends StatelessWidget {
                         ConstrainedBox(
                           constraints: const BoxConstraints(maxWidth: 540),
                           child: Text(
-                            'Our primary command centers are strategically positioned at pivotal oceanic junctions routing, monitoring, and executing movements across high-density industrial corridors.',
+                            'Our headquarters is located in Coimbatore, India — the operational nerve center driving global logistics coordination and customer engagement.',
                             style: text.bodyMedium?.copyWith(
                               color: AppColors.textTertiary,
                               height: 1.5,
@@ -217,19 +219,10 @@ class _StrategicHubsSection extends StatelessWidget {
                     ),
                   ),
                   if (!isMobile)
-                    const Row(
-                      children: [
-                        Icon(
-                          Icons.keyboard_arrow_left,
-                          color: AppColors.textTertiary,
-                          size: 28,
-                        ),
-                        Icon(
-                          Icons.keyboard_arrow_right,
-                          color: AppColors.black,
-                          size: 28,
-                        ),
-                      ],
+                    const Icon(
+                      Icons.location_on_outlined,
+                      color: AppColors.black,
+                      size: 28,
                     ),
                 ],
               ),
@@ -238,27 +231,12 @@ class _StrategicHubsSection extends StatelessWidget {
                   ? const Column(
                       children: [
                         _HubCard(
-                          city: 'ROTTERDAM',
-                          region: 'EUROPE INTERCONNECT',
+                          city: 'COIMBATORE',
+                          region: 'HEADQUARTERS',
                           address:
-                              'Waalhaven Zuidzijde 21\n3089 JH Rotterdam, NL',
-                          phone: '+31 (0)10 400 2400',
-                        ),
-                        SizedBox(height: AppSpacing.lg),
-                        _HubCard(
-                          city: 'SINGAPORE',
-                          region: 'ASIA-PACIFIC AXIS',
-                          address:
-                              '7 Jurong Pier Rd\nPSA Shipping Plaza, Singapore 619159',
-                          phone: '+65 6271 2211',
-                        ),
-                        SizedBox(height: AppSpacing.lg),
-                        _HubCard(
-                          city: 'NEW YORK',
-                          region: 'NORTH AMERICAN GATEWAY',
-                          address:
-                              '120 Industrial Pkwy\nJersey City, NJ 07305, USA',
-                          phone: '+1 (201) 555-0199',
+                              '141, EB Colony Ponnairajpuram,\nPalaniappa Nagar, Coimbatore-641001',
+                          phone: '+91 83004 47268',
+                          email: 'lokeshkiran@mxworld.in',
                         ),
                       ],
                     )
@@ -267,31 +245,12 @@ class _StrategicHubsSection extends StatelessWidget {
                       children: [
                         Expanded(
                           child: _HubCard(
-                            city: 'ROTTERDAM',
-                            region: 'EUROPE INTERCONNECT',
+                            city: 'COIMBATORE',
+                            region: 'HEADQUARTERS',
                             address:
-                                'Waalhaven Zuidzijde 21\n3089 JH Rotterdam, NL',
-                            phone: '+31 (0)10 400 2400',
-                          ),
-                        ),
-                        SizedBox(width: AppSpacing.lg),
-                        Expanded(
-                          child: _HubCard(
-                            city: 'SINGAPORE',
-                            region: 'ASIA-PACIFIC AXIS',
-                            address:
-                                '7 Jurong Pier Rd\nPSA Shipping Plaza, Singapore 619159',
-                            phone: '+65 6271 2211',
-                          ),
-                        ),
-                        SizedBox(width: AppSpacing.lg),
-                        Expanded(
-                          child: _HubCard(
-                            city: 'NEW YORK',
-                            region: 'NORTH AMERICAN GATEWAY',
-                            address:
-                                '120 Industrial Pkwy\nJersey City, NJ 07305, USA',
-                            phone: '+1 (201) 555-0199',
+                                '141, EB Colony Ponnairajpuram,\nPalaniappa Nagar, Coimbatore-641001',
+                            phone: '+91 83004 47268',
+                            email: 'lokeshkiran@mxworld.in',
                           ),
                         ),
                       ],
@@ -309,12 +268,14 @@ class _HubCard extends StatelessWidget {
   final String region;
   final String address;
   final String phone;
+  final String? email;
 
   const _HubCard({
     required this.city,
     required this.region,
     required this.address,
     required this.phone,
+    this.email,
   });
 
   @override
@@ -358,8 +319,24 @@ class _HubCard extends StatelessWidget {
                 ?.copyWith(height: 1.4, color: AppColors.textSecondary),
           ),
           const SizedBox(height: AppSpacing.md),
+          if (email != null) ...[
+            Text(
+              'EMAIL US',
+              style: text.labelSmall?.copyWith(
+                color: AppColors.textTertiary,
+                fontSize: 10,
+                letterSpacing: 1.0,
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              email!,
+              style: text.bodyMedium?.copyWith(color: AppColors.textSecondary),
+            ),
+            const SizedBox(height: AppSpacing.md),
+          ],
           Text(
-            'CONTACTS',
+            'CALL US',
             style: text.labelSmall?.copyWith(
               color: AppColors.textTertiary,
               fontSize: 10,
@@ -370,18 +347,6 @@ class _HubCard extends StatelessWidget {
           Text(
             phone,
             style: text.bodyMedium?.copyWith(color: AppColors.textSecondary),
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          InkWell(
-            onTap: () {},
-            child: Text(
-              'TERMINAL DETAILS →',
-              style: text.labelSmall?.copyWith(
-                fontWeight: FontWeight.w800,
-                letterSpacing: 1.2,
-                color: AppColors.black,
-              ),
-            ),
           ),
         ],
       ),
@@ -455,7 +420,7 @@ class _MaritimeDominanceSection extends StatelessWidget {
                   borderRadius: BorderRadius.zero,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () => showUnderDevelopment(context),
               child: Text(
                 'DOWNLOAD NETWORK REPORT',
                 style: text.labelMedium?.copyWith(
@@ -656,221 +621,3 @@ class _RealTimeDataAccessSection extends StatelessWidget {
   }
 }
 
-class _BottomInquirySection extends StatefulWidget {
-  const _BottomInquirySection();
-
-  @override
-  State<_BottomInquirySection> createState() => _BottomInquirySectionState();
-}
-
-class _BottomInquirySectionState extends State<_BottomInquirySection> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _messageController = TextEditingController();
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _messageController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.sizeOf(context).width;
-    final bool isMobile = AppBreakpoints.isMobile(width);
-    final TextTheme text = Theme.of(context).textTheme;
-
-    final Widget formFields = Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Row(
-          children: [
-            Expanded(
-              child: _InquiryField(
-                controller: _nameController,
-                hint: 'Full Name',
-              ),
-            ),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
-              child: _InquiryField(
-                controller: _emailController,
-                hint: 'Email Address',
-                keyboardType: TextInputType.emailAddress,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.lg),
-        _InquiryField(
-          controller: _messageController,
-          hint: 'Describe your destination specifications...',
-          maxLines: 3,
-        ),
-        const SizedBox(height: AppSpacing.xl),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: SizedBox(
-            width: isMobile ? double.infinity : 160,
-            height: 48,
-            child: FilledButton(
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.black,
-                foregroundColor: AppColors.white,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-              ),
-              onPressed: () {},
-              child: Text(
-                'SUBMIT INQUIRY',
-                style: text.labelLarge?.copyWith(
-                  color: AppColors.white,
-                  fontSize: 12,
-                  letterSpacing: 1.5,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-
-    return RevealOnScroll(
-      duration: const Duration(milliseconds: 800),
-      offset: 40,
-      visibleFraction: 0.05,
-      child: Container(
-        color: const Color(0xFFF8F9FA),
-        child: ContentContainer(
-          vertical: AppSpacing.section,
-          child: isMobile
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'QUICK INQUIRY',
-                      style: text.headlineLarge
-                          ?.copyWith(fontWeight: FontWeight.w800),
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(
-                      'Connect with our routing deployment routing teams for tailored solution options and operational setups.',
-                      style: text.bodyMedium
-                          ?.copyWith(color: AppColors.textTertiary),
-                    ),
-                    const SizedBox(height: AppSpacing.xl),
-                    formFields,
-                  ],
-                )
-              : Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: AppSpacing.xl),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'QUICK\nINQUIRY',
-                              style: text.headlineLarge?.copyWith(
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 0.5,
-                                height: 1.1,
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.md),
-                            Text(
-                              'Connect with our routing deployment routing teams for tailored solution options and global foundational coordination setup.',
-                              style: text.bodyMedium?.copyWith(
-                                color: AppColors.textTertiary,
-                                height: 1.5,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.section),
-                    Expanded(flex: 6, child: formFields),
-                  ],
-                ),
-        ),
-      ),
-    );
-  }
-}
-
-class _InquiryField extends StatelessWidget {
-  const _InquiryField({
-    required this.controller,
-    required this.hint,
-    this.maxLines = 1,
-    this.keyboardType,
-  });
-  final TextEditingController controller;
-  final String hint;
-  final int maxLines;
-  final TextInputType? keyboardType;
-
-  @override
-  Widget build(BuildContext context) {
-    final TextTheme text = Theme.of(context).textTheme;
-    return TextField(
-      controller: controller,
-      maxLines: maxLines,
-      keyboardType: keyboardType,
-      style: text.bodyLarge?.copyWith(color: AppColors.black),
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: text.bodyMedium?.copyWith(color: AppColors.textTertiary),
-        isDense: true,
-        contentPadding: const EdgeInsets.all(16),
-        fillColor: const Color(0xFFE9ECEF),
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(2),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(2),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(2),
-          borderSide: const BorderSide(color: AppColors.black, width: 1),
-        ),
-      ),
-    );
-  }
-}
-
-class ContentContainer extends StatelessWidget {
-  final Widget child;
-  final double vertical;
-  const ContentContainer({super.key, required this.child, this.vertical = 0.0});
-
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.sizeOf(context).width;
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
-        child: Padding(
-          padding: AppSpacing.pageGutter(width)
-              .copyWith(top: vertical, bottom: vertical),
-          child: child,
-        ),
-      ),
-    );
-  }
-}
-
-class AppBreakpoints {
-  static bool isMobile(double width) => width < 840;
-}

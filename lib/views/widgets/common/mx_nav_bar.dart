@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/theme/app_colors.dart';
 import 'mx_button.dart';
+import 'under_development.dart';
 
 /// Top navigation bar rendered above every screen.
 ///
@@ -37,13 +38,12 @@ class MxNavBar extends StatelessWidget {
         children: <Widget>[
           GestureDetector(
             onTap: () => context.go('/home'),
-            child: Text(
-              'MX WORLD',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: fg,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.5,
-                  ),
+            child: Image.asset(
+              onDark
+                  ? 'assets/images/logo_dark.png'
+                  : 'assets/images/logo_light.png',
+              height: 36,
+              fit: BoxFit.contain,
             ),
           ),
           if (isMobile)
@@ -62,7 +62,7 @@ class MxNavBar extends StatelessWidget {
                 MxButton(
                   label: 'Track Shipment',
                   onDark: onDark,
-                  onPressed: () {},
+                  onPressed: () => showUnderDevelopment(context),
                 ),
               ],
             ),
@@ -98,8 +98,7 @@ class _NavLink extends StatelessWidget {
               label,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: fg.withValues(alpha: isActive ? 1 : 0.65),
-                    fontWeight:
-                        isActive ? FontWeight.w600 : FontWeight.w400,
+                    fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
                   ),
             ),
             const SizedBox(height: 4),

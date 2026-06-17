@@ -56,6 +56,7 @@ class HubItem {
     required this.address,
     required this.capacity,
     this.phone,
+    this.email,
   });
 
   final String region;
@@ -63,6 +64,7 @@ class HubItem {
   final String address;
   final String capacity;
   final String? phone;
+  final String? email;
 }
 
 /// A value-driven solution bullet on the about screen.

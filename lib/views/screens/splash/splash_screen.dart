@@ -110,13 +110,10 @@ class _SplashScreenState extends State<SplashScreen>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(
-              'MX WORLD',
-              style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    color: AppColors.white,
-                    letterSpacing: 1.0,
-                    fontWeight: FontWeight.w800,
-                  ),
+            Image.asset(
+              'assets/images/logo_stacked_dark.png',
+              height: 120,
+              fit: BoxFit.contain,
             ),
             const SizedBox(height: 14),
             _AnimatedUnderline(progress: _underline),
@@ -147,7 +144,7 @@ class _AnimatedUnderline extends StatelessWidget {
       animation: progress,
       builder: (BuildContext context, _) {
         return Container(
-          width: 120 * progress.value,
+          width: 200 * progress.value,
           height: 2,
           color: AppColors.accent,
         );

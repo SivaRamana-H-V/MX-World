@@ -56,12 +56,11 @@ class MxFooter extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            'MX WORLD',
-            style: text.titleLarge?.copyWith(
-              color: AppColors.white,
-              fontWeight: FontWeight.w800,
-            ),
+          Image.asset(
+            'assets/images/logo_dark.png',
+            height: 40,
+            fit: BoxFit.contain,
+            alignment: Alignment.centerLeft,
           ),
           const SizedBox(height: AppSpacing.md),
           Text(
@@ -184,7 +183,7 @@ class _LegalBar extends StatelessWidget {
           letterSpacing: 0.8,
         );
     final Widget copyright = Text(
-      '© 2024 MX WORLD GLOBAL LOGISTICS. ALL RIGHTS RESERVED.',
+      '© 2026 MX WORLD GLOBAL LOGISTICS. ALL RIGHTS RESERVED.',
       style: style,
     );
     final Widget links = Wrap(
