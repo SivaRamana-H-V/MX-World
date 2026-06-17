@@ -4,8 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mxworld/core/constants/app_spacing.dart';
 import 'package:mxworld/core/theme/app_colors.dart';
 import 'package:mxworld/services/content_repository.dart';
+import 'package:mxworld/views/widgets/common/animated_counter.dart';
 import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
 import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
+import 'package:mxworld/views/widgets/common/reveal_on_scroll.dart';
 import 'package:mxworld/views/widgets/common/safe_network_image.dart';
 
 class ContactScreen extends ConsumerWidget {
@@ -106,33 +108,38 @@ class _MetricsBand extends StatelessWidget {
       {'val': '12.4M', 'lbl': 'ANNUAL METRIC TONS'},
     ];
 
-    return Container(
-      color: AppColors.black,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
-      child: ContentContainer(
-        child: isMobile
-            ? Column(
-                children: metrics
-                    .map(
-                      (m) => Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: AppSpacing.md,
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: AppColors.black,
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
+        child: ContentContainer(
+          child: isMobile
+              ? Column(
+                  children: metrics
+                      .map(
+                        (m) => Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: AppSpacing.md,
+                          ),
+                          child: _buildMetricItem(text, m['val']!, m['lbl']!),
                         ),
-                        child: _buildMetricItem(text, m['val']!, m['lbl']!),
-                      ),
-                    )
-                    .toList(),
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: metrics
-                    .map(
-                      (m) => Expanded(
-                        child: _buildMetricItem(text, m['val']!, m['lbl']!),
-                      ),
-                    )
-                    .toList(),
-              ),
+                      )
+                      .toList(),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: metrics
+                      .map(
+                        (m) => Expanded(
+                          child: _buildMetricItem(text, m['val']!, m['lbl']!),
+                        ),
+                      )
+                      .toList(),
+                ),
+        ),
       ),
     );
   }
@@ -141,8 +148,8 @@ class _MetricsBand extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          val,
+        AnimatedCounter(
+          value: val,
           style: text.headlineMedium?.copyWith(
             color: AppColors.white,
             fontWeight: FontWeight.w900,
@@ -170,122 +177,127 @@ class _StrategicHubsSection extends StatelessWidget {
     final bool isMobile = AppBreakpoints.isMobile(width);
     final TextTheme text = Theme.of(context).textTheme;
 
-    return Container(
-      color: AppColors.white,
-      child: ContentContainer(
-        vertical: AppSpacing.section,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'STRATEGIC HUBS',
-                        style: text.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.black,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.sm),
-                      ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 540),
-                        child: Text(
-                          'Our primary command centers are strategically positioned at pivotal oceanic junctions routing, monitoring, and executing movements across high-density industrial corridors.',
-                          style: text.bodyMedium?.copyWith(
-                            color: AppColors.textTertiary,
-                            height: 1.5,
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: AppColors.white,
+        child: ContentContainer(
+          vertical: AppSpacing.section,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'STRATEGIC HUBS',
+                          style: text.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.black,
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: AppSpacing.sm),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 540),
+                          child: Text(
+                            'Our primary command centers are strategically positioned at pivotal oceanic junctions routing, monitoring, and executing movements across high-density industrial corridors.',
+                            style: text.bodyMedium?.copyWith(
+                              color: AppColors.textTertiary,
+                              height: 1.5,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                if (!isMobile)
-                  const Row(
-                    children: [
-                      Icon(
-                        Icons.keyboard_arrow_left,
-                        color: AppColors.textTertiary,
-                        size: 28,
-                      ),
-                      Icon(
-                        Icons.keyboard_arrow_right,
-                        color: AppColors.black,
-                        size: 28,
-                      ),
-                    ],
-                  ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.xxl),
-            isMobile
-                ? const Column(
-                    children: [
-                      _HubCard(
-                        city: 'ROTTERDAM',
-                        region: 'EUROPE INTERCONNECT',
-                        address:
-                            'Waalhaven Zuidzijde 21\n3089 JH Rotterdam, NL',
-                        phone: '+31 (0)10 400 2400',
-                      ),
-                      SizedBox(height: AppSpacing.lg),
-                      _HubCard(
-                        city: 'SINGAPORE',
-                        region: 'ASIA-PACIFIC AXIS',
-                        address:
-                            '7 Jurong Pier Rd\nPSA Shipping Plaza, Singapore 619159',
-                        phone: '+65 6271 2211',
-                      ),
-                      SizedBox(height: AppSpacing.lg),
-                      _HubCard(
-                        city: 'NEW YORK',
-                        region: 'NORTH AMERICAN GATEWAY',
-                        address:
-                            '120 Industrial Pkwy\nJersey City, NJ 07305, USA',
-                        phone: '+1 (201) 555-0199',
-                      ),
-                    ],
-                  )
-                : const Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: _HubCard(
+                  if (!isMobile)
+                    const Row(
+                      children: [
+                        Icon(
+                          Icons.keyboard_arrow_left,
+                          color: AppColors.textTertiary,
+                          size: 28,
+                        ),
+                        Icon(
+                          Icons.keyboard_arrow_right,
+                          color: AppColors.black,
+                          size: 28,
+                        ),
+                      ],
+                    ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.xxl),
+              isMobile
+                  ? const Column(
+                      children: [
+                        _HubCard(
                           city: 'ROTTERDAM',
                           region: 'EUROPE INTERCONNECT',
                           address:
                               'Waalhaven Zuidzijde 21\n3089 JH Rotterdam, NL',
                           phone: '+31 (0)10 400 2400',
                         ),
-                      ),
-                      SizedBox(width: AppSpacing.lg),
-                      Expanded(
-                        child: _HubCard(
+                        SizedBox(height: AppSpacing.lg),
+                        _HubCard(
                           city: 'SINGAPORE',
                           region: 'ASIA-PACIFIC AXIS',
                           address:
                               '7 Jurong Pier Rd\nPSA Shipping Plaza, Singapore 619159',
                           phone: '+65 6271 2211',
                         ),
-                      ),
-                      SizedBox(width: AppSpacing.lg),
-                      Expanded(
-                        child: _HubCard(
+                        SizedBox(height: AppSpacing.lg),
+                        _HubCard(
                           city: 'NEW YORK',
                           region: 'NORTH AMERICAN GATEWAY',
                           address:
                               '120 Industrial Pkwy\nJersey City, NJ 07305, USA',
                           phone: '+1 (201) 555-0199',
                         ),
-                      ),
-                    ],
-                  ),
-          ],
+                      ],
+                    )
+                  : const Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: _HubCard(
+                            city: 'ROTTERDAM',
+                            region: 'EUROPE INTERCONNECT',
+                            address:
+                                'Waalhaven Zuidzijde 21\n3089 JH Rotterdam, NL',
+                            phone: '+31 (0)10 400 2400',
+                          ),
+                        ),
+                        SizedBox(width: AppSpacing.lg),
+                        Expanded(
+                          child: _HubCard(
+                            city: 'SINGAPORE',
+                            region: 'ASIA-PACIFIC AXIS',
+                            address:
+                                '7 Jurong Pier Rd\nPSA Shipping Plaza, Singapore 619159',
+                            phone: '+65 6271 2211',
+                          ),
+                        ),
+                        SizedBox(width: AppSpacing.lg),
+                        Expanded(
+                          child: _HubCard(
+                            city: 'NEW YORK',
+                            region: 'NORTH AMERICAN GATEWAY',
+                            address:
+                                '120 Industrial Pkwy\nJersey City, NJ 07305, USA',
+                            phone: '+1 (201) 555-0199',
+                          ),
+                        ),
+                      ],
+                    ),
+            ],
+          ),
         ),
       ),
     );
@@ -458,22 +470,27 @@ class _MaritimeDominanceSection extends StatelessWidget {
       ),
     );
 
-    return Container(
-      color: AppColors.white,
-      child: ContentContainer(
-        child: isMobile
-            ? Column(
-                children: [
-                  leftImage,
-                  rightContent,
-                ],
-              )
-            : Row(
-                children: [
-                  const Expanded(child: leftImage),
-                  Expanded(child: rightContent),
-                ],
-              ),
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: AppColors.white,
+        child: ContentContainer(
+          child: isMobile
+              ? Column(
+                  children: [
+                    leftImage,
+                    rightContent,
+                  ],
+                )
+              : Row(
+                  children: [
+                    const Expanded(child: leftImage),
+                    Expanded(child: rightContent),
+                  ],
+                ),
+        ),
       ),
     );
   }
@@ -583,25 +600,30 @@ class _RealTimeDataAccessSection extends StatelessWidget {
       ),
     );
 
-    return Container(
-      color: const Color(0xFFE9ECEF),
-      child: ContentContainer(
-        vertical: AppSpacing.section,
-        child: isMobile
-            ? Column(
-                children: [
-                  leftAccordions,
-                  const SizedBox(height: AppSpacing.xxl),
-                  rightMockup,
-                ],
-              )
-            : Row(
-                children: [
-                  Expanded(flex: 5, child: leftAccordions),
-                  const SizedBox(width: AppSpacing.section),
-                  Expanded(flex: 5, child: rightMockup),
-                ],
-              ),
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: const Color(0xFFE9ECEF),
+        child: ContentContainer(
+          vertical: AppSpacing.section,
+          child: isMobile
+              ? Column(
+                  children: [
+                    leftAccordions,
+                    const SizedBox(height: AppSpacing.xxl),
+                    rightMockup,
+                  ],
+                )
+              : Row(
+                  children: [
+                    Expanded(flex: 5, child: leftAccordions),
+                    const SizedBox(width: AppSpacing.section),
+                    Expanded(flex: 5, child: rightMockup),
+                  ],
+                ),
+        ),
       ),
     );
   }
@@ -717,63 +739,68 @@ class _BottomInquirySectionState extends State<_BottomInquirySection> {
       ],
     );
 
-    return Container(
-      color: const Color(0xFFF8F9FA),
-      child: ContentContainer(
-        vertical: AppSpacing.section,
-        child: isMobile
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'QUICK INQUIRY',
-                    style: text.headlineLarge
-                        ?.copyWith(fontWeight: FontWeight.w800),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  Text(
-                    'Connect with our routing deployment routing teams for tailored solution options and operational setups.',
-                    style: text.bodyMedium
-                        ?.copyWith(color: AppColors.textTertiary),
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  formFields,
-                ],
-              )
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    flex: 4,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: AppSpacing.xl),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'QUICK\nINQUIRY',
-                            style: text.headlineLarge?.copyWith(
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: 0.5,
-                              height: 1.1,
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: const Color(0xFFF8F9FA),
+        child: ContentContainer(
+          vertical: AppSpacing.section,
+          child: isMobile
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'QUICK INQUIRY',
+                      style: text.headlineLarge
+                          ?.copyWith(fontWeight: FontWeight.w800),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    Text(
+                      'Connect with our routing deployment routing teams for tailored solution options and operational setups.',
+                      style: text.bodyMedium
+                          ?.copyWith(color: AppColors.textTertiary),
+                    ),
+                    const SizedBox(height: AppSpacing.xl),
+                    formFields,
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: AppSpacing.xl),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'QUICK\nINQUIRY',
+                              style: text.headlineLarge?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 0.5,
+                                height: 1.1,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: AppSpacing.md),
-                          Text(
-                            'Connect with our routing deployment routing teams for tailored solution options and global foundational coordination setup.',
-                            style: text.bodyMedium?.copyWith(
-                              color: AppColors.textTertiary,
-                              height: 1.5,
+                            const SizedBox(height: AppSpacing.md),
+                            Text(
+                              'Connect with our routing deployment routing teams for tailored solution options and global foundational coordination setup.',
+                              style: text.bodyMedium?.copyWith(
+                                color: AppColors.textTertiary,
+                                height: 1.5,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: AppSpacing.section),
-                  Expanded(flex: 6, child: formFields),
-                ],
-              ),
+                    const SizedBox(width: AppSpacing.section),
+                    Expanded(flex: 6, child: formFields),
+                  ],
+                ),
+        ),
       ),
     );
   }

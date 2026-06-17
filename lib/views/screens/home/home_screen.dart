@@ -4,6 +4,7 @@ import 'package:mxworld/core/constants/app_spacing.dart';
 import 'package:mxworld/core/theme/app_colors.dart';
 import 'package:mxworld/models/content_models.dart';
 import 'package:mxworld/services/content_repository.dart';
+import 'package:mxworld/views/widgets/common/animated_counter.dart';
 import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
 import 'package:mxworld/views/widgets/common/mx_button.dart';
 import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
@@ -164,8 +165,8 @@ class _WhyChooseUs extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                stat.value,
+              AnimatedCounter(
+                value: stat.value,
                 style: text.displayMedium?.copyWith(
                   fontSize: 40,
                   fontWeight: FontWeight.w900,
@@ -186,26 +187,31 @@ class _WhyChooseUs extends StatelessWidget {
       ],
     );
 
-    return Container(
-      color: AppColors.white,
-      child: ContentContainer(
-        vertical: AppSpacing.section,
-        child: isMobile
-            ? Column(
-                children: <Widget>[
-                  left,
-                  const SizedBox(height: AppSpacing.xxl),
-                  right,
-                ],
-              )
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(flex: 5, child: left),
-                  const SizedBox(width: AppSpacing.section),
-                  Expanded(flex: 5, child: right),
-                ],
-              ),
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: AppColors.white,
+        child: ContentContainer(
+          vertical: AppSpacing.section,
+          child: isMobile
+              ? Column(
+                  children: <Widget>[
+                    left,
+                    const SizedBox(height: AppSpacing.xxl),
+                    right,
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(flex: 5, child: left),
+                    const SizedBox(width: AppSpacing.section),
+                    Expanded(flex: 5, child: right),
+                  ],
+                ),
+        ),
       ),
     );
   }
@@ -221,54 +227,59 @@ class _CoreServices extends StatelessWidget {
     final TextTheme text = Theme.of(context).textTheme;
     const List<ServiceItem> services = ContentRepository.services;
 
-    return Container(
-      color: const Color(0xFFF5F7F9),
-      child: ContentContainer(
-        vertical: AppSpacing.section,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const EyebrowLabel('REAL-TIME CAPABILITIES'),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(
-                      'CORE LOGISTICS\nSERVICES',
-                      style: text.headlineLarge
-                          ?.copyWith(fontWeight: FontWeight.w800),
-                    ),
-                  ],
-                ),
-                if (!isMobile) const _HeaderLink(label: 'VIEW ALL SERVICES'),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.xl),
-            if (isMobile)
-              Column(
-                children: <Widget>[
-                  for (final ServiceItem service in services)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: AppSpacing.md),
-                      child: _ServiceCard(service: service),
-                    ),
-                ],
-              )
-            else
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: const Color(0xFFF5F7F9),
+        child: ContentContainer(
+          vertical: AppSpacing.section,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
               Row(
-                children: <Widget>[
-                  for (int i = 0; i < services.length; i++) ...<Widget>[
-                    Expanded(child: _ServiceCard(service: services[i])),
-                    if (i < services.length - 1)
-                      const SizedBox(width: AppSpacing.md),
-                  ],
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const EyebrowLabel('REAL-TIME CAPABILITIES'),
+                      const SizedBox(height: AppSpacing.md),
+                      Text(
+                        'CORE LOGISTICS\nSERVICES',
+                        style: text.headlineLarge
+                            ?.copyWith(fontWeight: FontWeight.w800),
+                      ),
+                    ],
+                  ),
+                  if (!isMobile) const _HeaderLink(label: 'VIEW ALL SERVICES'),
                 ],
               ),
-          ],
+              const SizedBox(height: AppSpacing.xl),
+              if (isMobile)
+                Column(
+                  children: <Widget>[
+                    for (final ServiceItem service in services)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                        child: _ServiceCard(service: service),
+                      ),
+                  ],
+                )
+              else
+                Row(
+                  children: <Widget>[
+                    for (int i = 0; i < services.length; i++) ...<Widget>[
+                      Expanded(child: _ServiceCard(service: services[i])),
+                      if (i < services.length - 1)
+                        const SizedBox(width: AppSpacing.md),
+                    ],
+                  ],
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -330,57 +341,62 @@ class _PortfolioSection extends StatelessWidget {
     final bool isMobile = AppBreakpoints.isMobile(width);
     final TextTheme text = Theme.of(context).textTheme;
 
-    return Container(
-      color: AppColors.white,
-      child: ContentContainer(
-        vertical: AppSpacing.section,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const EyebrowLabel('OPERATIONAL SHOWCASE'),
-            const SizedBox(height: AppSpacing.md),
-            isMobile
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'PORTFOLIO OF SCALE',
-                        style: text.headlineLarge
-                            ?.copyWith(fontWeight: FontWeight.w800),
-                      ),
-                      const SizedBox(height: AppSpacing.md),
-                      Text(
-                        'Our track record spans continents, managing the movement of essential cargo through the world\'s most sophisticated transit hubs.',
-                        style: text.bodyMedium
-                            ?.copyWith(color: AppColors.textTertiary),
-                      ),
-                    ],
-                  )
-                : Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: AppColors.white,
+        child: ContentContainer(
+          vertical: AppSpacing.section,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const EyebrowLabel('OPERATIONAL SHOWCASE'),
+              const SizedBox(height: AppSpacing.md),
+              isMobile
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
                           'PORTFOLIO OF SCALE',
                           style: text.headlineLarge
                               ?.copyWith(fontWeight: FontWeight.w800),
                         ),
-                      ),
-                      const SizedBox(width: AppSpacing.xl),
-                      Expanded(
-                        child: Text(
-                          'Our track record spans continents, managing the movement of essential cargo through the world\'s most sophisticated transit hubs with 4PL Integrated Logistics.',
-                          style: text.bodyMedium?.copyWith(
-                            color: AppColors.textTertiary,
-                            height: 1.5,
+                        const SizedBox(height: AppSpacing.md),
+                        Text(
+                          'Our track record spans continents, managing the movement of essential cargo through the world\'s most sophisticated transit hubs.',
+                          style: text.bodyMedium
+                              ?.copyWith(color: AppColors.textTertiary),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            'PORTFOLIO OF SCALE',
+                            style: text.headlineLarge
+                                ?.copyWith(fontWeight: FontWeight.w800),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-            const SizedBox(height: AppSpacing.xxl),
-            _PortfolioGrid(isMobile: isMobile),
-          ],
+                        const SizedBox(width: AppSpacing.xl),
+                        Expanded(
+                          child: Text(
+                            'Our track record spans continents, managing the movement of essential cargo through the world\'s most sophisticated transit hubs with 4PL Integrated Logistics.',
+                            style: text.bodyMedium?.copyWith(
+                              color: AppColors.textTertiary,
+                              height: 1.5,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+              const SizedBox(height: AppSpacing.xxl),
+              _PortfolioGrid(isMobile: isMobile),
+            ],
+          ),
         ),
       ),
     );
@@ -546,25 +562,30 @@ class _EngineeringReach extends StatelessWidget {
       ),
     );
 
-    return Container(
-      color: AppColors.white,
-      child: ContentContainer(
-        vertical: AppSpacing.section,
-        child: isMobile
-            ? Column(
-                children: <Widget>[
-                  left,
-                  const SizedBox(height: AppSpacing.xxl),
-                  right,
-                ],
-              )
-            : Row(
-                children: <Widget>[
-                  Expanded(child: left),
-                  const SizedBox(width: AppSpacing.section),
-                  Expanded(child: right),
-                ],
-              ),
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: AppColors.white,
+        child: ContentContainer(
+          vertical: AppSpacing.section,
+          child: isMobile
+              ? Column(
+                  children: <Widget>[
+                    left,
+                    const SizedBox(height: AppSpacing.xxl),
+                    right,
+                  ],
+                )
+              : Row(
+                  children: <Widget>[
+                    Expanded(child: left),
+                    const SizedBox(width: AppSpacing.section),
+                    Expanded(child: right),
+                  ],
+                ),
+        ),
       ),
     );
   }
@@ -644,62 +665,67 @@ class _QuickInquiryFormState extends State<_QuickInquiryForm> {
       ],
     );
 
-    return Container(
-      color: AppColors.black,
-      child: ContentContainer(
-        vertical: AppSpacing.section,
-        child: isMobile
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'QUICK\nINQUIRY.',
-                    style: text.displayMedium?.copyWith(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.w800,
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: AppColors.black,
+        child: ContentContainer(
+          vertical: AppSpacing.section,
+          child: isMobile
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'QUICK\nINQUIRY.',
+                      style: text.displayMedium?.copyWith(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  Text(
-                    'Have a logistics challenge? Reach out for a tailored solution.',
-                    style: text.bodyMedium
-                        ?.copyWith(color: AppColors.textOnDarkSecondary),
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  formFields,
-                ],
-              )
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    flex: 4,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'QUICK\nINQUIRY.',
-                          style: text.displayMedium?.copyWith(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w800,
-                            height: 1.1,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.md),
-                        Text(
-                          'Have a specific logistics challenge? Reach out to our global team for a tailored solution that meets your scale and precision requirements.',
-                          style: text.bodyMedium?.copyWith(
-                            color: AppColors.textOnDarkSecondary,
-                            height: 1.5,
-                          ),
-                        ),
-                      ],
+                    const SizedBox(height: AppSpacing.md),
+                    Text(
+                      'Have a logistics challenge? Reach out for a tailored solution.',
+                      style: text.bodyMedium
+                          ?.copyWith(color: AppColors.textOnDarkSecondary),
                     ),
-                  ),
-                  const SizedBox(width: AppSpacing.section),
-                  Expanded(flex: 6, child: formFields),
-                ],
-              ),
+                    const SizedBox(height: AppSpacing.xl),
+                    formFields,
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'QUICK\nINQUIRY.',
+                            style: text.displayMedium?.copyWith(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w800,
+                              height: 1.1,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.md),
+                          Text(
+                            'Have a specific logistics challenge? Reach out to our global team for a tailored solution that meets your scale and precision requirements.',
+                            style: text.bodyMedium?.copyWith(
+                              color: AppColors.textOnDarkSecondary,
+                              height: 1.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.section),
+                    Expanded(flex: 6, child: formFields),
+                  ],
+                ),
+        ),
       ),
     );
   }

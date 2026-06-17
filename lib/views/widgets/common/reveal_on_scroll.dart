@@ -77,13 +77,19 @@ class _RevealOnScrollState extends State<RevealOnScroll>
 
   void _attachAndCheck() {
     if (!mounted) return;
-    _position = Scrollable.maybeOf(context)?.position;
-    if (_position == null) {
-      // Not inside a scroll view (e.g. tests) — just reveal.
-      _play();
-      return;
-    }
-    _position!.addListener(_onScroll);
+    context.visitAncestorElements((element) {
+      if (element.widget is Scrollable) {
+        final scrollable = element.widget as Scrollable;
+        final physics = scrollable.physics;
+        if (physics == null || physics is! NeverScrollableScrollPhysics) {
+          final stateElement = element as StatefulElement;
+          _position = (stateElement.state as ScrollableState).position;
+          _position!.addListener(_onScroll);
+          return false;
+        }
+      }
+      return true;
+    });
     _maybeReveal();
   }
 

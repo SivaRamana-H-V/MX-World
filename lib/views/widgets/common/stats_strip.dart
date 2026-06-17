@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_spacing.dart';
 import '../../../models/content_models.dart';
+import 'animated_counter.dart';
 
 /// A horizontal strip of large numeric statistics with captions.
 ///
@@ -66,8 +67,8 @@ class _StatCell extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text(
-          stat.value,
+        AnimatedCounter(
+          value: stat.value,
           style: text.displayMedium?.copyWith(
             fontSize: 38,
             fontWeight: FontWeight.w800,

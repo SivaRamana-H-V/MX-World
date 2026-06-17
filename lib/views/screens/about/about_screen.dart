@@ -4,9 +4,11 @@ import 'package:mxworld/core/constants/app_spacing.dart';
 import 'package:mxworld/core/theme/app_colors.dart';
 import 'package:mxworld/models/content_models.dart';
 import 'package:mxworld/services/content_repository.dart';
+import 'package:mxworld/views/widgets/common/animated_counter.dart';
 import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
 import 'package:mxworld/views/widgets/common/mx_button.dart';
 import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
+import 'package:mxworld/views/widgets/common/reveal_on_scroll.dart';
 import 'package:mxworld/views/widgets/common/safe_network_image.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -135,8 +137,8 @@ class _OperationalExcellence extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '85,000',
+                AnimatedCounter(
+                  value: '85,000',
                   style: text.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w900,
                     color: AppColors.black,
@@ -156,8 +158,8 @@ class _OperationalExcellence extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '100+',
+                AnimatedCounter(
+                  value: '100+',
                   style: text.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w900,
                     color: AppColors.black,
@@ -193,26 +195,31 @@ class _OperationalExcellence extends StatelessWidget {
       ],
     );
 
-    return Container(
-      color: AppColors.white,
-      child: ContentContainer(
-        vertical: AppSpacing.section,
-        child: isMobile
-            ? Column(
-                children: <Widget>[
-                  left,
-                  const SizedBox(height: AppSpacing.xxl),
-                  right,
-                ],
-              )
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(flex: 5, child: left),
-                  const SizedBox(width: AppSpacing.section),
-                  const Expanded(flex: 5, child: right),
-                ],
-              ),
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: AppColors.white,
+        child: ContentContainer(
+          vertical: AppSpacing.section,
+          child: isMobile
+              ? Column(
+                  children: <Widget>[
+                    left,
+                    const SizedBox(height: AppSpacing.xxl),
+                    right,
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(flex: 5, child: left),
+                    const SizedBox(width: AppSpacing.section),
+                    const Expanded(flex: 5, child: right),
+                  ],
+                ),
+        ),
       ),
     );
   }
@@ -289,33 +296,38 @@ class _AboutStatsBand extends StatelessWidget {
       {'val': '365', 'lbl': 'DAYS A YEAR'},
     ];
 
-    return Container(
-      color: AppColors.black,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxl),
-      child: ContentContainer(
-        child: isMobile
-            ? Column(
-                children: metricStats
-                    .map(
-                      (s) => Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: AppSpacing.md,
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: AppColors.black,
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxl),
+        child: ContentContainer(
+          child: isMobile
+              ? Column(
+                  children: metricStats
+                      .map(
+                        (s) => Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: AppSpacing.md,
+                          ),
+                          child: _buildItem(text, s['val']!, s['lbl']!),
                         ),
-                        child: _buildItem(text, s['val']!, s['lbl']!),
-                      ),
-                    )
-                    .toList(),
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: metricStats
-                    .map(
-                      (s) => Expanded(
-                        child: _buildItem(text, s['val']!, s['lbl']!),
-                      ),
-                    )
-                    .toList(),
-              ),
+                      )
+                      .toList(),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: metricStats
+                      .map(
+                        (s) => Expanded(
+                          child: _buildItem(text, s['val']!, s['lbl']!),
+                        ),
+                      )
+                      .toList(),
+                ),
+        ),
       ),
     );
   }
@@ -324,8 +336,8 @@ class _AboutStatsBand extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          value,
+        AnimatedCounter(
+          value: value,
           style: text.displayMedium?.copyWith(
             color: AppColors.white,
             fontWeight: FontWeight.w900,
@@ -355,81 +367,86 @@ class _CtaBand extends StatelessWidget {
     final double width = MediaQuery.sizeOf(context).width;
     final bool isMobile = AppBreakpoints.isMobile(width);
 
-    return Container(
-      color: const Color(0xFFE9ECEF),
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.section),
-      child: ContentContainer(
-        child: Container(
-          color: AppColors.white,
-          padding: EdgeInsets.all(isMobile ? AppSpacing.lg : AppSpacing.xxl),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'About Us',
-                    style: text.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textTertiary,
-                    ),
-                  ),
-                  const Row(
-                    children: [
-                      Icon(
-                        Icons.arrow_back,
-                        size: 18,
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: const Color(0xFFE9ECEF),
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.section),
+        child: ContentContainer(
+          child: Container(
+            color: AppColors.white,
+            padding: EdgeInsets.all(isMobile ? AppSpacing.lg : AppSpacing.xxl),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'About Us',
+                      style: text.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w700,
                         color: AppColors.textTertiary,
                       ),
-                      SizedBox(width: AppSpacing.md),
-                      Icon(
-                        Icons.arrow_forward,
-                        size: 18,
-                        color: AppColors.black,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.xxl),
-              Text(
-                'READY TO NAVIGATE?',
-                style: text.headlineLarge?.copyWith(
-                  fontWeight: FontWeight.w900,
-                  color: AppColors.black,
-                  letterSpacing: 0.5,
+                    ),
+                    const Row(
+                      children: [
+                        Icon(
+                          Icons.arrow_back,
+                          size: 18,
+                          color: AppColors.textTertiary,
+                        ),
+                        SizedBox(width: AppSpacing.md),
+                        Icon(
+                          Icons.arrow_forward,
+                          size: 18,
+                          color: AppColors.black,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 520),
-                child: Text(
-                  'Discover how our global network and expertise can transform your supply chain into a competitive advantage.',
+                const SizedBox(height: AppSpacing.xxl),
+                Text(
+                  'READY TO NAVIGATE?',
+                  style: text.headlineLarge?.copyWith(
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.black,
+                    letterSpacing: 0.5,
+                  ),
                   textAlign: TextAlign.center,
-                  style: text.bodyMedium
-                      ?.copyWith(color: AppColors.textSecondary, height: 1.5),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.xl),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  MxButton(
-                    label: 'GET A QUOTE',
-                    onPressed: () {},
+                const SizedBox(height: AppSpacing.md),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 520),
+                  child: Text(
+                    'Discover how our global network and expertise can transform your supply chain into a competitive advantage.',
+                    textAlign: TextAlign.center,
+                    style: text.bodyMedium
+                        ?.copyWith(color: AppColors.textSecondary, height: 1.5),
                   ),
-                  const SizedBox(width: AppSpacing.md),
-                  MxButton(
-                    label: 'GLOBAL NETWORK',
-                    filled: false,
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.xl),
-            ],
+                ),
+                const SizedBox(height: AppSpacing.xl),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    MxButton(
+                      label: 'GET A QUOTE',
+                      onPressed: () {},
+                    ),
+                    const SizedBox(width: AppSpacing.md),
+                    MxButton(
+                      label: 'GLOBAL NETWORK',
+                      filled: false,
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.xl),
+              ],
+            ),
           ),
         ),
       ),
@@ -517,62 +534,67 @@ class _QuickInquiryFormState extends State<_QuickInquiryForm> {
       ],
     );
 
-    return Container(
-      color: const Color(0xFFF8F9FA),
-      child: ContentContainer(
-        vertical: AppSpacing.section,
-        child: isMobile
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'QUICK INQUIRY',
-                    style: text.headlineLarge
-                        ?.copyWith(fontWeight: FontWeight.w800),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  Text(
-                    'Have a specific logistics challenge? Reach out to our global team for a tailored solution.',
-                    style: text.bodyMedium
-                        ?.copyWith(color: AppColors.textTertiary),
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  formFields,
-                ],
-              )
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    flex: 4,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: AppSpacing.xl),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'QUICK INQUIRY',
-                            style: text.headlineLarge?.copyWith(
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: 0.5,
+    return RevealOnScroll(
+      duration: const Duration(milliseconds: 800),
+      offset: 40,
+      visibleFraction: 0.05,
+      child: Container(
+        color: const Color(0xFFF8F9FA),
+        child: ContentContainer(
+          vertical: AppSpacing.section,
+          child: isMobile
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'QUICK INQUIRY',
+                      style: text.headlineLarge
+                          ?.copyWith(fontWeight: FontWeight.w800),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    Text(
+                      'Have a specific logistics challenge? Reach out to our global team for a tailored solution.',
+                      style: text.bodyMedium
+                          ?.copyWith(color: AppColors.textTertiary),
+                    ),
+                    const SizedBox(height: AppSpacing.xl),
+                    formFields,
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: AppSpacing.xl),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'QUICK INQUIRY',
+                              style: text.headlineLarge?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 0.5,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: AppSpacing.md),
-                          Text(
-                            'Have a specific logistics challenge? Reach out to our global team for a tailored solution that meets your scale and precision requirements.',
-                            style: text.bodyMedium?.copyWith(
-                              color: AppColors.textTertiary,
-                              height: 1.5,
+                            const SizedBox(height: AppSpacing.md),
+                            Text(
+                              'Have a specific logistics challenge? Reach out to our global team for a tailored solution that meets your scale and precision requirements.',
+                              style: text.bodyMedium?.copyWith(
+                                color: AppColors.textTertiary,
+                                height: 1.5,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: AppSpacing.section),
-                  Expanded(flex: 6, child: formFields),
-                ],
-              ),
+                    const SizedBox(width: AppSpacing.section),
+                    Expanded(flex: 6, child: formFields),
+                  ],
+                ),
+        ),
       ),
     );
   }
