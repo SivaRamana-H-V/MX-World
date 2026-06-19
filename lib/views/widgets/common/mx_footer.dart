@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/theme/app_colors.dart';
@@ -186,6 +187,16 @@ class _LegalBar extends StatelessWidget {
       '© 2026 MX WORLD GLOBAL LOGISTICS. ALL RIGHTS RESERVED.',
       style: style,
     );
+    final Widget developer = GestureDetector(
+      onTap: () => launchUrl(Uri.parse('https://www.notedquicly.com')),
+      child: Text(
+        'Design and Developed by Noted Quicly',
+        style: style?.copyWith(
+          color: AppColors.accent,
+          decoration: TextDecoration.underline,
+        ),
+      ),
+    );
     final Widget links = Wrap(
       spacing: AppSpacing.lg,
       children: <Widget>[
@@ -204,13 +215,21 @@ class _LegalBar extends StatelessWidget {
     if (isCompact) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[copyright, const SizedBox(height: 12), links],
+        children: <Widget>[
+          copyright,
+          const SizedBox(height: 8),
+          developer,
+          const SizedBox(height: 12),
+          links,
+        ],
       );
     }
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         copyright,
+        const SizedBox(width: 24),
+        developer,
         const Spacer(),
         Flexible(child: links),
       ],

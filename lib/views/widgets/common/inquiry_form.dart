@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/theme/app_colors.dart';
@@ -84,18 +85,36 @@ class _InquiryFormState extends State<InquiryForm>
     super.dispose();
   }
 
-  /// Validates all fields and shows a success snack-bar with haptic feedback.
+  /// Validates all fields and sends the inquiry via email.
   Future<void> _submit() async {
     if (_formKey.currentState?.validate() ?? false) {
       setState(() => _isSubmitting = true);
 
-      // Simulate API call
-      await Future.delayed(const Duration(milliseconds: 800));
+      final body = Uri(
+        scheme: 'mailto',
+        path: 'lokeshkiran@mxworld.in',
+        queryParameters: {
+          'subject': 'Inquiry from ${_companyController.text}',
+          'body': '''
+Name: ${_firstNameController.text} ${_lastNameController.text}
+Company: ${_companyController.text}
+Email: ${_emailController.text}
+Mobile: ${_mobileController.text}
+Country: ${_selectedCountry ?? 'N/A'}
+Enquiry Type: ${_selectedEnquiryType ?? 'N/A'}
+Message:
+${_messageController.text}
+''',
+        },
+      );
+
+      if (await canLaunchUrl(body)) {
+        await launchUrl(body);
+      }
 
       if (mounted) {
         setState(() => _isSubmitting = false);
 
-        // Show success message
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Row(

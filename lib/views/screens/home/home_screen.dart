@@ -357,192 +357,89 @@ class _ServiceCardState extends State<_ServiceCard> {
   }
 }
 
-// ── Home Showcase ────────────────────────────────────────────────────────────
+// ── Global Presence ──────────────────────────────────────────────────────────
 
 class _PortfolioSection extends StatelessWidget {
   const _PortfolioSection();
 
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.sizeOf(context).width;
-    final bool isMobile = AppBreakpoints.isMobile(width);
-    final TextTheme text = Theme.of(context).textTheme;
-
-    return RevealOnScroll(
-      child: ColoredBox(
-        color: AppColors.white,
-        child: ContentContainer(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const EyebrowLabel('OPERATIONAL SHOWCASE'),
-              const SizedBox(height: AppSpacing.md),
-              isMobile
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'HOME OF SCALE',
-                          style: text.headlineLarge
-                              ?.copyWith(fontWeight: FontWeight.w800),
-                        ),
-                        const SizedBox(height: AppSpacing.md),
-                        Text(
-                          'Our track record spans continents, managing the movement '
-                          'of essential cargo through the world\'s most sophisticated '
-                          'transit hubs.',
-                          style: text.bodyMedium
-                              ?.copyWith(color: AppColors.textTertiary),
-                        ),
-                      ],
-                    )
-                  : Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            'HOME OF SCALE',
-                            style: text.headlineLarge
-                                ?.copyWith(fontWeight: FontWeight.w800),
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.xl),
-                        Expanded(
-                          child: Text(
-                            'Our track record spans continents, managing the movement '
-                            'of essential cargo through the world\'s most sophisticated '
-                            'transit hubs with 4PL Integrated Logistics.',
-                            style: text.bodyMedium?.copyWith(
-                              color: AppColors.textTertiary,
-                              height: 1.5,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-              const SizedBox(height: AppSpacing.xxl),
-              _PortfolioGrid(isMobile: isMobile),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _PortfolioGrid extends StatelessWidget {
-  const _PortfolioGrid({required this.isMobile});
-  final bool isMobile;
-
-  @override
-  Widget build(BuildContext context) {
-    const List<PortfolioItem> items = ContentRepository.portfolio;
-    if (isMobile) {
-      return Column(
-        children: <Widget>[
-          for (int i = 0; i < items.length; i++)
-            Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.lg),
-              child: _PortfolioCard(item: items[i], height: 280),
-            ),
-        ],
-      );
-    }
-    return Column(
-      children: <Widget>[
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              flex: 3,
-              child: _PortfolioCard(item: items[0], height: 460),
-            ),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
-              flex: 2,
-              child: _PortfolioCard(item: items[1], height: 460),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.lg),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(child: _PortfolioCard(item: items[2], height: 320)),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(child: _PortfolioCard(item: items[3], height: 320)),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class _PortfolioCard extends StatelessWidget {
-  const _PortfolioCard({required this.item, required this.height});
-  final PortfolioItem item;
-  final double height;
+  static const _countries = <Map<String, String>>[
+    {'flag': '🇨🇳', 'name': 'China'},
+    {'flag': '🇦🇺', 'name': 'Australia'},
+    {'flag': '🇨🇦', 'name': 'Canada'},
+    {'flag': '🇦🇪', 'name': 'Dubai'},
+    {'flag': '🇩🇪', 'name': 'Germany'},
+    {'flag': '🇮🇳', 'name': 'India'},
+    {'flag': '🇬🇧', 'name': 'United Kingdom'},
+    {'flag': '🇸🇬', 'name': 'Singapore'},
+    {'flag': '🇧🇷', 'name': 'Brazil'},
+    {'flag': '🇳🇱', 'name': 'Netherlands'},
+    {'flag': '🇯🇵', 'name': 'Japan'},
+    {'flag': '🇺🇸', 'name': 'United States'},
+  ];
 
   @override
   Widget build(BuildContext context) {
     final TextTheme text = Theme.of(context).textTheme;
-    return SizedBox(
-      height: height,
-      child: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          SafeNetworkImage(url: item.imageUrl),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: <Color>[
-                  AppColors.black.withValues(alpha: 0.85),
-                  AppColors.black.withValues(alpha: 0.1),
-                ],
+
+    return ColoredBox(
+      color: AppColors.black,
+      child: ContentContainer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const EyebrowLabel('GLOBAL PRESENCE'),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              'WHERE WE OPERATE',
+              style: text.headlineLarge?.copyWith(
+                fontWeight: FontWeight.w800,
+                color: AppColors.white,
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.xl),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.sm,
-                    vertical: 4,
-                  ),
-                  color: AppColors.accent,
-                  child: Text(
-                    item.tag.toUpperCase(),
-                    style: text.labelMedium?.copyWith(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+            const SizedBox(height: AppSpacing.xs),
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.xxl),
+              child: Text(
+                'Strategic coverage across the world\'s key markets.',
+                style: text.bodyMedium?.copyWith(
+                  color: AppColors.textOnDarkSecondary,
                 ),
-                const SizedBox(height: AppSpacing.md),
-                Text(
-                  item.title,
-                  style: text.titleLarge?.copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                Text(
-                  item.description,
-                  style: text.bodyMedium
-                      ?.copyWith(color: AppColors.textOnDarkSecondary),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+            Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              children: _countries.map((c) => _countryChip(c)).toList(),
+            ),
+          ],
+        ),
       ),
     );
   }
+}
+
+Widget _countryChip(Map<String, String> country) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+    decoration: BoxDecoration(
+      color: AppColors.charcoal,
+      border: Border.all(color: AppColors.borderDark),
+      borderRadius: BorderRadius.circular(6),
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(country['flag']!, style: const TextStyle(fontSize: 20)),
+        const SizedBox(width: 10),
+        Text(
+          country['name']!,
+          style: const TextStyle(
+            color: AppColors.white,
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    ),
+  );
 }
