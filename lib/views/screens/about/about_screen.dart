@@ -312,25 +312,32 @@ class _AboutStatsBand extends StatelessWidget {
             child: isMobile
                 ? Column(
                     children: _stats
-                        .map((Map<String, String> s) => Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: AppSpacing.md,),
-                              child: _StatItem(
-                                  text: text,
-                                  val: s['val']!,
-                                  lbl: s['lbl']!,),
-                            ),)
+                        .map(
+                          (Map<String, String> s) => Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: AppSpacing.md,
+                            ),
+                            child: _StatItem(
+                              text: text,
+                              val: s['val']!,
+                              lbl: s['lbl']!,
+                            ),
+                          ),
+                        )
                         .toList(),
                   )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: _stats
-                        .map((Map<String, String> s) => Expanded(
-                              child: _StatItem(
-                                  text: text,
-                                  val: s['val']!,
-                                  lbl: s['lbl']!,),
-                            ),)
+                        .map(
+                          (Map<String, String> s) => Expanded(
+                            child: _StatItem(
+                              text: text,
+                              val: s['val']!,
+                              lbl: s['lbl']!,
+                            ),
+                          ),
+                        )
                         .toList(),
                   ),
           ),
@@ -341,8 +348,11 @@ class _AboutStatsBand extends StatelessWidget {
 }
 
 class _StatItem extends StatelessWidget {
-  const _StatItem(
-      {required this.text, required this.val, required this.lbl,});
+  const _StatItem({
+    required this.text,
+    required this.val,
+    required this.lbl,
+  });
 
   final TextTheme text;
   final String val;
@@ -395,7 +405,8 @@ class _CtaBand extends StatelessWidget {
               color: AppColors.white,
               child: Padding(
                 padding: EdgeInsets.all(
-                    isMobile ? AppSpacing.lg : AppSpacing.xxl,),
+                  isMobile ? AppSpacing.lg : AppSpacing.xxl,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
@@ -411,11 +422,17 @@ class _CtaBand extends StatelessWidget {
                         ),
                         const Row(
                           children: <Widget>[
-                            Icon(Icons.arrow_back,
-                                size: 18, color: AppColors.textTertiary,),
+                            Icon(
+                              Icons.arrow_back,
+                              size: 18,
+                              color: AppColors.textTertiary,
+                            ),
                             SizedBox(width: AppSpacing.md),
-                            Icon(Icons.arrow_forward,
-                                size: 18, color: AppColors.black,),
+                            Icon(
+                              Icons.arrow_forward,
+                              size: 18,
+                              color: AppColors.black,
+                            ),
                           ],
                         ),
                       ],
@@ -438,7 +455,9 @@ class _CtaBand extends StatelessWidget {
                         'your supply chain into a competitive advantage.',
                         textAlign: TextAlign.center,
                         style: text.bodyMedium?.copyWith(
-                            color: AppColors.textSecondary, height: 1.5,),
+                          color: AppColors.textSecondary,
+                          height: 1.5,
+                        ),
                       ),
                     ),
                     const SizedBox(height: AppSpacing.xl),

@@ -4,7 +4,6 @@ import 'package:mxworld/core/constants/app_spacing.dart';
 import 'package:mxworld/core/theme/app_colors.dart';
 import 'package:mxworld/services/content_repository.dart';
 import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
-import 'package:mxworld/views/widgets/common/inquiry_form.dart';
 import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
 import 'package:mxworld/views/widgets/common/safe_network_image.dart';
 
@@ -90,7 +89,6 @@ class ServicesScreen extends StatelessWidget {
             'Regional Distribution Warehousing',
           ],
         ),
-        InquiryForm(),
       ],
     );
   }

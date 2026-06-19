@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 
-import '../../views/screens/about/about_screen.dart';
 import '../../views/screens/contact/contact_screen.dart';
 import '../../views/screens/home/home_screen.dart';
 import '../../views/screens/services/services_screen.dart';
@@ -46,13 +45,6 @@ abstract final class AppRouter {
             pageBuilder: (context, state) => AppTransitions.goRouterPage(
               state: state,
               child: const HomeScreen(),
-            ),
-          ),
-          GoRoute(
-            path: '/about',
-            pageBuilder: (context, state) => AppTransitions.goRouterPage(
-              state: state,
-              child: const AboutScreen(),
             ),
           ),
           GoRoute(

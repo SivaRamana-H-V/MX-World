@@ -10,7 +10,6 @@ import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
 import 'package:mxworld/views/widgets/common/inquiry_form.dart';
 import 'package:mxworld/views/widgets/common/reveal_on_scroll.dart';
 import 'package:mxworld/views/widgets/common/safe_network_image.dart';
-import 'package:mxworld/views/widgets/common/under_development.dart';
 
 class ContactScreen extends ConsumerWidget {
   const ContactScreen({super.key});
@@ -22,7 +21,6 @@ class ContactScreen extends ConsumerWidget {
         _NetworkHeroSection(),
         _MetricsBand(),
         _StrategicHubsSection(),
-        _MaritimeDominanceSection(),
         _RealTimeDataAccessSection(),
         InquiryForm(),
       ],
@@ -45,7 +43,7 @@ class _NetworkHeroSection extends StatelessWidget {
         fit: StackFit.expand,
         children: <Widget>[
           const SafeNetworkImage(
-            url: ContentRepository.heroImage,
+            url: ContentRepository.importExportImage,
             fit: BoxFit.cover,
           ),
           DecoratedBox(
@@ -116,7 +114,6 @@ class _MetricsBand extends StatelessWidget {
       visibleFraction: 0.05,
       child: Container(
         color: AppColors.black,
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
         child: ContentContainer(
           child: isMobile
               ? Column(
@@ -241,17 +238,15 @@ class _StrategicHubsSection extends StatelessWidget {
                       ],
                     )
                   : const Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: _HubCard(
-                            city: 'COIMBATORE',
-                            region: 'HEADQUARTERS',
-                            address:
-                                '141, EB Colony Ponnairajpuram,\nPalaniappa Nagar, Coimbatore-641001',
-                            phone: '+91 83004 47268',
-                            email: 'lokeshkiran@mxworld.in',
-                          ),
+                        _HubCard(
+                          city: 'COIMBATORE',
+                          region: 'HEADQUARTERS',
+                          address:
+                              '141, EB Colony Ponnairajpuram,\nPalaniappa Nagar, Coimbatore-641001',
+                          phone: '+91 83004 47268',
+                          email: 'lokeshkiran@mxworld.in',
                         ),
                       ],
                     ),
@@ -350,150 +345,6 @@ class _HubCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _MaritimeDominanceSection extends StatelessWidget {
-  const _MaritimeDominanceSection();
-
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.sizeOf(context).width;
-    final bool isMobile = AppBreakpoints.isMobile(width);
-    final TextTheme text = Theme.of(context).textTheme;
-
-    const Widget leftImage = AspectRatio(
-      aspectRatio: 1,
-      child: SafeNetworkImage(
-        url: ContentRepository.seaFreightImage,
-        fit: BoxFit.cover,
-      ),
-    );
-
-    final Widget rightContent = Container(
-      color: AppColors.black,
-      padding: EdgeInsets.all(isMobile ? AppSpacing.xl : AppSpacing.xxl),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'OCEAN MATRIX',
-            style: text.labelSmall?.copyWith(
-              color: AppColors.textOnDarkTertiary,
-              letterSpacing: 1.5,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            'MARITIME DOMINANCE AT SCALE.',
-            style: text.headlineLarge?.copyWith(
-              color: AppColors.white,
-              fontWeight: FontWeight.w800,
-              height: 1.1,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          _buildFeatureRow(
-            text,
-            Icons.anchor,
-            'Automated Fleet Management',
-            'Real-time telemetry and optimized speed control arrays running on all active carrier assets to minimize operational latency.',
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          _buildFeatureRow(
-            text,
-            Icons.lan_outlined,
-            'Intermodal Port Infrastructure',
-            'Deep integration links connected seamlessly between vessel arriving lanes and inland rail network infrastructure modules.',
-          ),
-          const SizedBox(height: AppSpacing.xxl),
-          SizedBox(
-            width: isMobile ? double.infinity : double.infinity,
-            height: 48,
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: AppColors.white, width: 1),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-              ),
-              onPressed: () => showUnderDevelopment(context),
-              child: Text(
-                'DOWNLOAD NETWORK REPORT',
-                style: text.labelMedium?.copyWith(
-                  color: AppColors.white,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-
-    return RevealOnScroll(
-      duration: const Duration(milliseconds: 800),
-      offset: 40,
-      visibleFraction: 0.05,
-      child: Container(
-        color: AppColors.white,
-        child: ContentContainer(
-          child: isMobile
-              ? Column(
-                  children: [
-                    leftImage,
-                    rightContent,
-                  ],
-                )
-              : Row(
-                  children: [
-                    const Expanded(child: leftImage),
-                    Expanded(child: rightContent),
-                  ],
-                ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFeatureRow(
-    TextTheme text,
-    IconData icon,
-    String title,
-    String desc,
-  ) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(icon, color: AppColors.white, size: 20),
-        const SizedBox(width: AppSpacing.md),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: text.titleMedium?.copyWith(
-                  color: AppColors.white,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                desc,
-                style: text.bodyMedium?.copyWith(
-                  color: AppColors.textOnDarkSecondary,
-                  height: 1.4,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }
@@ -620,4 +471,3 @@ class _RealTimeDataAccessSection extends StatelessWidget {
     );
   }
 }
-

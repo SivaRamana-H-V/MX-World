@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/constants/app_spacing.dart';
-import '../../../core/theme/app_colors.dart';
-import 'mx_button.dart';
-import 'under_development.dart';
+import 'package:mxworld/core/constants/app_spacing.dart';
+import 'package:mxworld/core/theme/app_colors.dart';
+import 'package:mxworld/views/widgets/common/mx_button.dart';
+import 'package:mxworld/views/widgets/common/under_development.dart';
 
 /// Top navigation bar rendered above every screen.
 ///
@@ -16,12 +16,15 @@ class MxNavBar extends StatelessWidget {
   final String currentRoute;
   final bool onDark;
 
-  static const List<({String label, String route})> _links =
-      <({String label, String route})>[
-    (label: 'Portfolio', route: '/home'),
-    (label: 'About', route: '/about'),
-    (label: 'Services', route: '/services'),
-    (label: 'Contact', route: '/contact'),
+  static const List<({IconData icon, String title, String route})> _links =
+      <({IconData icon, String title, String route})>[
+    (icon: Icons.home_outlined, title: 'Home', route: '/home'),
+    (
+      icon: Icons.miscellaneous_services_outlined,
+      title: 'Services',
+      route: '/services'
+    ),
+    (icon: Icons.call, title: 'Contact', route: '/contact'),
   ];
 
   @override
@@ -51,11 +54,11 @@ class MxNavBar extends StatelessWidget {
           else
             Row(
               children: <Widget>[
-                for (final link in _links)
-                  _NavLink(
-                    label: link.label,
-                    route: link.route,
-                    isActive: currentRoute == link.route,
+                for (int i = 0; i < _links.length; i++)
+                  _NavIcon(
+                    icon: i == 2 ? _links[i].icon : _links[i].title,
+                    route: _links[i].route,
+                    isActive: currentRoute == _links[i].route,
                     fg: fg,
                   ),
                 const SizedBox(width: AppSpacing.lg),
@@ -72,15 +75,28 @@ class MxNavBar extends StatelessWidget {
   }
 }
 
-class _NavLink extends StatelessWidget {
-  const _NavLink({
-    required this.label,
+String _routeLabel(String route) {
+  switch (route) {
+    case '/home':
+      return 'Home';
+    case '/services':
+      return 'Services';
+    case '/contact':
+      return 'Contact';
+    default:
+      return '';
+  }
+}
+
+class _NavIcon extends StatelessWidget {
+  const _NavIcon({
+    required this.icon,
     required this.route,
     required this.isActive,
     required this.fg,
   });
 
-  final String label;
+  final dynamic icon;
   final String route;
   final bool isActive;
   final Color fg;
@@ -88,23 +104,30 @@ class _NavLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
       child: GestureDetector(
         onTap: () => context.go(route),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(
-              label,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: fg.withValues(alpha: isActive ? 1 : 0.65),
-                    fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
-                  ),
-            ),
+            if (icon is IconData)
+              Icon(
+                icon,
+                color: fg.withValues(alpha: isActive ? 1 : 0.65),
+                size: 22,
+              ),
+            if (icon is String)
+              Text(
+                icon,
+                style: TextStyle(
+                  color: fg.withValues(alpha: isActive ? 1 : 0.65),
+                  fontSize: 12,
+                ),
+              ),
             const SizedBox(height: 4),
             Container(
               height: 1.5,
-              width: 18,
+              width: 14,
               color: isActive ? fg : Colors.transparent,
             ),
           ],
@@ -130,16 +153,28 @@ class _MobileMenuButton extends StatelessWidget {
         for (final link in MxNavBar._links)
           PopupMenuItem<String>(
             value: link.route,
-            child: Text(
-              link.label,
-              style: TextStyle(
-                color: AppColors.white.withValues(
-                  alpha: currentRoute == link.route ? 1 : 0.7,
+            child: Row(
+              children: [
+                Icon(
+                  link.icon,
+                  color: AppColors.white.withValues(
+                    alpha: currentRoute == link.route ? 1 : 0.7,
+                  ),
+                  size: 20,
                 ),
-                fontWeight: currentRoute == link.route
-                    ? FontWeight.w600
-                    : FontWeight.w400,
-              ),
+                const SizedBox(width: 12),
+                Text(
+                  _routeLabel(link.route),
+                  style: TextStyle(
+                    color: AppColors.white.withValues(
+                      alpha: currentRoute == link.route ? 1 : 0.7,
+                    ),
+                    fontWeight: currentRoute == link.route
+                        ? FontWeight.w600
+                        : FontWeight.w400,
+                  ),
+                ),
+              ],
             ),
           ),
       ],

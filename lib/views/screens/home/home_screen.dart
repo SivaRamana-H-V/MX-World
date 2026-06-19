@@ -8,7 +8,6 @@ import 'package:mxworld/services/content_repository.dart';
 import 'package:mxworld/views/widgets/common/animated_counter.dart';
 import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
 import 'package:mxworld/views/widgets/common/inquiry_form.dart';
-import 'package:mxworld/views/widgets/common/mx_button.dart';
 import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
 import 'package:mxworld/views/widgets/common/reveal_on_scroll.dart';
 import 'package:mxworld/views/widgets/common/safe_network_image.dart';
@@ -25,39 +24,8 @@ class HomeScreen extends StatelessWidget {
         _WhyChooseUs(),
         _CoreServices(),
         _PortfolioSection(),
-        _EngineeringReach(),
         InquiryForm(),
       ],
-    );
-  }
-}
-
-// ── Internal link label used in multiple sections ─────────────────────────────
-
-class _TextLink extends StatelessWidget {
-  const _TextLink({required this.label, this.route});
-
-  final String label;
-  final String? route;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (route != null) {
-          context.go(route!);
-        } else {
-          showUnderDevelopment(context);
-        }
-      },
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              fontWeight: FontWeight.w600,
-              letterSpacing: 1.2,
-              fontSize: 13,
-            ),
-      ),
     );
   }
 }
@@ -105,10 +73,9 @@ class _HeroSection extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         'GLOBAL LOGISTICS\nREDEFINED.',
-                        style: (isMobile
-                                ? text.displayMedium
-                                : text.displayLarge)
-                            ?.copyWith(
+                        style:
+                            (isMobile ? text.displayMedium : text.displayLarge)
+                                ?.copyWith(
                           color: AppColors.white,
                           height: 1.1,
                           fontWeight: FontWeight.w800,
@@ -167,7 +134,17 @@ class _WhyChooseUs extends StatelessWidget {
               ?.copyWith(color: AppColors.textTertiary, height: 1.5),
         ),
         const SizedBox(height: AppSpacing.md),
-        const _TextLink(label: 'DISCOVER MORE →', route: '/about'),
+        GestureDetector(
+          onTap: () => showUnderDevelopment(context),
+          child: Text(
+            'DISCOVER MORE →',
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 1.2,
+                  fontSize: 13,
+                ),
+          ),
+        ),
       ],
     );
 
@@ -268,7 +245,17 @@ class _CoreServices extends StatelessWidget {
                     ],
                   ),
                   if (!isMobile)
-                    const _TextLink(label: 'VIEW ALL SERVICES', route: '/services'),
+                    GestureDetector(
+                      onTap: () => context.go('/services'),
+                      child: Text(
+                        'VIEW ALL SERVICES →',
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
+                              fontSize: 13,
+                            ),
+                      ),
+                    ),
                 ],
               ),
               const SizedBox(height: AppSpacing.xl),
@@ -300,55 +287,77 @@ class _CoreServices extends StatelessWidget {
   }
 }
 
-class _ServiceCard extends StatelessWidget {
+class _ServiceCard extends StatefulWidget {
   const _ServiceCard({required this.service});
   final ServiceItem service;
 
   @override
+  State<_ServiceCard> createState() => _ServiceCardState();
+}
+
+class _ServiceCardState extends State<_ServiceCard> {
+  bool _hovered = false;
+
+  @override
   Widget build(BuildContext context) {
     final TextTheme text = Theme.of(context).textTheme;
-    return GestureDetector(
-      onTap: () => context.go('/services'),
-      child: SizedBox(
-        height: 420,
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            SafeNetworkImage(url: service.imageUrl),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: <Color>[
-                    AppColors.black.withValues(alpha: 0.85),
-                    AppColors.black.withValues(alpha: 0.0),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(AppSpacing.xl),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Text(
-                  service.title.toUpperCase(),
-                  style: text.titleMedium?.copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 1.2,
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: AnimatedScale(
+        scale: _hovered ? 1.04 : 1.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.fastOutSlowIn,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.fastOutSlowIn,
+          height: _hovered ? 440 : 420,
+          child: GestureDetector(
+            onTap: () => context.go('/services'),
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                SafeNetworkImage(url: widget.service.imageUrl),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: <Color>[
+                        AppColors.black.withValues(alpha: 0.85),
+                        AppColors.black.withValues(alpha: 0.0),
+                      ],
+                    ),
                   ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.all(AppSpacing.xl),
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: AnimatedDefaultTextStyle(
+                      duration: const Duration(milliseconds: 300),
+                      style: text.titleMedium!.copyWith(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: _hovered ? 1.8 : 1.2,
+                        fontSize: _hovered ? 24 : 20,
+                      ),
+                      child: Text(
+                        widget.service.title.toUpperCase(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-// ── Portfolio ─────────────────────────────────────────────────────────────────
+// ── Home Showcase ────────────────────────────────────────────────────────────
 
 class _PortfolioSection extends StatelessWidget {
   const _PortfolioSection();
@@ -373,7 +382,7 @@ class _PortfolioSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'PORTFOLIO OF SCALE',
+                          'HOME OF SCALE',
                           style: text.headlineLarge
                               ?.copyWith(fontWeight: FontWeight.w800),
                         ),
@@ -392,7 +401,7 @@ class _PortfolioSection extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            'PORTFOLIO OF SCALE',
+                            'HOME OF SCALE',
                             style: text.headlineLarge
                                 ?.copyWith(fontWeight: FontWeight.w800),
                           ),
@@ -444,9 +453,15 @@ class _PortfolioGrid extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Expanded(flex: 3, child: _PortfolioCard(item: items[0], height: 460)),
+            Expanded(
+              flex: 3,
+              child: _PortfolioCard(item: items[0], height: 460),
+            ),
             const SizedBox(width: AppSpacing.lg),
-            Expanded(flex: 2, child: _PortfolioCard(item: items[1], height: 460)),
+            Expanded(
+              flex: 2,
+              child: _PortfolioCard(item: items[1], height: 460),
+            ),
           ],
         ),
         const SizedBox(height: AppSpacing.lg),
@@ -527,77 +542,6 @@ class _PortfolioCard extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-// ── Engineering Reach ────────────────────────────────────────────────────────
-
-class _EngineeringReach extends StatelessWidget {
-  const _EngineeringReach();
-
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.sizeOf(context).width;
-    final bool isMobile = AppBreakpoints.isMobile(width);
-    final TextTheme text = Theme.of(context).textTheme;
-
-    final Widget left = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        const EyebrowLabel('ENGINEERING'),
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          'ENGINEERING GLOBAL\nREACH.',
-          style: text.headlineLarge?.copyWith(fontWeight: FontWeight.w800),
-        ),
-        const SizedBox(height: AppSpacing.lg),
-        Text(
-          'We are architects of global infrastructure. Every hub, vessel, and '
-          'sortation center is engineered for operational transparency at scale. '
-          'Our integrated network moves over 12 million metric tons annually '
-          'with 99.9% reliability.',
-          style: text.bodyMedium
-              ?.copyWith(color: AppColors.textTertiary, height: 1.5),
-        ),
-        const SizedBox(height: AppSpacing.xl),
-        MxButton(
-          label: 'EXPLORE GLOBAL NETWORK',
-          onPressed: () => showUnderDevelopment(context),
-        ),
-      ],
-    );
-
-    final Widget right = AspectRatio(
-      aspectRatio: 4 / 3,
-      child: SafeNetworkImage(
-        url: ContentRepository.services[1].imageUrl,
-        onDark: false,
-      ),
-    );
-
-    return RevealOnScroll(
-      child: ColoredBox(
-        color: AppColors.white,
-        child: ContentContainer(
-          child: isMobile
-              ? Column(
-                  children: <Widget>[
-                    left,
-                    const SizedBox(height: AppSpacing.xxl),
-                    right,
-                  ],
-                )
-              : Row(
-                  children: <Widget>[
-                    Expanded(child: left),
-                    const SizedBox(width: AppSpacing.section),
-                    Expanded(child: right),
-                  ],
-                ),
-        ),
       ),
     );
   }
