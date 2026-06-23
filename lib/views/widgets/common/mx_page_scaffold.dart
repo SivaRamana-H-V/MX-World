@@ -4,10 +4,8 @@ import '../../../core/constants/app_spacing.dart';
 
 /// Stacks page sections vertically inside the [AppShell] scroll view.
 ///
-/// Previously used [ListView] with [shrinkWrap: true], which forced Flutter to
-/// lay out every section before painting the first frame — causing 1–1.5 s
-/// routing lag. A [Column] builds children inline in the existing scroll
-/// viewport, giving the first frame immediate paint.
+/// Uses a non-flex layout so section overflow (handled by the parent scroll
+/// view) never triggers a RenderFlex overflow assertion.
 class MxPageScaffold extends StatelessWidget {
   const MxPageScaffold({super.key, required this.sections});
 
@@ -15,9 +13,7 @@ class MxPageScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return ListBody(
       children: sections,
     );
   }

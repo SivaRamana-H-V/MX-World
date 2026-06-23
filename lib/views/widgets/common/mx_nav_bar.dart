@@ -25,6 +25,7 @@ class MxNavBar extends StatelessWidget {
       route: '/services'
     ),
     (icon: Icons.call, title: 'Contact', route: '/contact'),
+    (icon: Icons.track_changes_outlined, title: 'Track Shipment', route: '/'),
   ];
 
   @override
@@ -56,17 +57,12 @@ class MxNavBar extends StatelessWidget {
               children: <Widget>[
                 for (int i = 0; i < _links.length; i++)
                   _NavIcon(
-                    icon: i == 2 ? _links[i].icon : _links[i].title,
+                    icon: (i == 2 || i == 3) ? _links[i].icon : _links[i].title,
+                    isRouteLabel: (i == 3) ? false : true,
                     route: _links[i].route,
                     isActive: currentRoute == _links[i].route,
                     fg: fg,
                   ),
-                const SizedBox(width: AppSpacing.lg),
-                IconButton(
-                  icon: Icon(Icons.track_changes_outlined, color: fg),
-                  tooltip: 'Track Shipment',
-                  onPressed: () => showUnderDevelopment(context),
-                ),
               ],
             ),
         ],
@@ -94,9 +90,11 @@ class _NavIcon extends StatelessWidget {
     required this.route,
     required this.isActive,
     required this.fg,
+    this.isRouteLabel = false,
   });
 
   final dynamic icon;
+  final bool isRouteLabel;
   final String route;
   final bool isActive;
   final Color fg;
@@ -106,7 +104,9 @@ class _NavIcon extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
       child: GestureDetector(
-        onTap: () => context.go(route),
+        onTap: isRouteLabel
+            ? () => context.go(route)
+            : () => showUnderDevelopment(context),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -150,26 +150,28 @@ class _MobileMenuButton extends StatelessWidget {
       color: AppColors.nearBlack,
       onSelected: (String route) => context.go(route),
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        for (final link in MxNavBar._links)
+        for (final String route in <String>{
+          for (final link in MxNavBar._links) link.route,
+        })
           PopupMenuItem<String>(
-            value: link.route,
+            value: route,
             child: Row(
               children: [
                 Icon(
-                  link.icon,
+                  MxNavBar._links.firstWhere((l) => l.route == route).icon,
                   color: AppColors.white.withValues(
-                    alpha: currentRoute == link.route ? 1 : 0.7,
+                    alpha: currentRoute == route ? 1 : 0.7,
                   ),
                   size: 20,
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  _routeLabel(link.route),
+                  _routeLabel(route),
                   style: TextStyle(
                     color: AppColors.white.withValues(
-                      alpha: currentRoute == link.route ? 1 : 0.7,
+                      alpha: currentRoute == route ? 1 : 0.7,
                     ),
-                    fontWeight: currentRoute == link.route
+                    fontWeight: currentRoute == route
                         ? FontWeight.w600
                         : FontWeight.w400,
                   ),

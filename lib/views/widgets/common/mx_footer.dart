@@ -98,6 +98,56 @@ class MxFooter extends StatelessWidget {
     final List<FooterColumn> effectiveColumns =
         columns ?? _defaultColumns;
 
+    final Widget hqBlock = SizedBox(
+      width: 220,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'HEADQUARTERS',
+            style: text.labelMedium?.copyWith(
+              color: AppColors.textOnDarkTertiary,
+              letterSpacing: 1.6,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            'COIMBATORE',
+            style: text.bodyMedium?.copyWith(
+              color: AppColors.white,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            '141, EB Colony Ponnairajpuram,\nPalaniappa Nagar, Coimbatore-641001',
+            style: text.bodySmall?.copyWith(
+              color: AppColors.textOnDarkSecondary,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            '+91 83004 47268',
+            style: text.bodySmall?.copyWith(
+              color: AppColors.textOnDarkSecondary,
+            ),
+          ),
+          const SizedBox(height: 2),
+          GestureDetector(
+            onTap: () => launchUrl(Uri.parse('mailto:lokeshkiran@mxworld.in')),
+            child: Text(
+              'lokeshkiran@mxworld.in',
+              style: text.bodySmall?.copyWith(
+                color: AppColors.accent,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
     final List<Widget> linkColumns = <Widget>[
       for (final FooterColumn col in effectiveColumns)
         SizedBox(
@@ -146,6 +196,8 @@ class MxFooter extends StatelessWidget {
                     if (i > 0) const SizedBox(width: 40),
                     Flexible(child: linkColumns[i]),
                   ],
+                  const SizedBox(width: 40),
+                  hqBlock,
                 ],
               )
             else
@@ -157,7 +209,7 @@ class MxFooter extends StatelessWidget {
                   Wrap(
                     spacing: AppSpacing.xl,
                     runSpacing: AppSpacing.xl,
-                    children: linkColumns,
+                    children: [...linkColumns, hqBlock],
                   ),
                 ],
               ),

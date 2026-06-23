@@ -7,7 +7,7 @@ import 'package:mxworld/services/content_repository.dart';
 import 'package:mxworld/views/widgets/common/animated_counter.dart';
 import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
 import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
-import 'package:mxworld/views/widgets/common/inquiry_form.dart';
+
 import 'package:mxworld/views/widgets/common/reveal_on_scroll.dart';
 import 'package:mxworld/views/widgets/common/safe_network_image.dart';
 
@@ -21,8 +21,7 @@ class ContactScreen extends ConsumerWidget {
         _NetworkHeroSection(),
         _MetricsBand(),
         _StrategicHubsSection(),
-        _RealTimeDataAccessSection(),
-        InquiryForm(),
+      
       ],
     );
   }
@@ -223,33 +222,6 @@ class _StrategicHubsSection extends StatelessWidget {
                     ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.xxl),
-              isMobile
-                  ? const Column(
-                      children: [
-                        _HubCard(
-                          city: 'COIMBATORE',
-                          region: 'HEADQUARTERS',
-                          address:
-                              '141, EB Colony Ponnairajpuram,\nPalaniappa Nagar, Coimbatore-641001',
-                          phone: '+91 83004 47268',
-                          email: 'lokeshkiran@mxworld.in',
-                        ),
-                      ],
-                    )
-                  : const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _HubCard(
-                          city: 'COIMBATORE',
-                          region: 'HEADQUARTERS',
-                          address:
-                              '141, EB Colony Ponnairajpuram,\nPalaniappa Nagar, Coimbatore-641001',
-                          phone: '+91 83004 47268',
-                          email: 'lokeshkiran@mxworld.in',
-                        ),
-                      ],
-                    ),
             ],
           ),
         ),
@@ -258,216 +230,5 @@ class _StrategicHubsSection extends StatelessWidget {
   }
 }
 
-class _HubCard extends StatelessWidget {
-  final String city;
-  final String region;
-  final String address;
-  final String phone;
-  final String? email;
 
-  const _HubCard({
-    required this.city,
-    required this.region,
-    required this.address,
-    required this.phone,
-    this.email,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    final TextTheme text = Theme.of(context).textTheme;
-    return Container(
-      color: const Color(0xFFF1F3F5),
-      padding: const EdgeInsets.all(AppSpacing.xl),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            region,
-            style: text.labelSmall?.copyWith(
-              color: AppColors.textTertiary,
-              letterSpacing: 1.1,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            city,
-            style: text.titleLarge?.copyWith(
-              fontWeight: FontWeight.w800,
-              color: AppColors.black,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            'ADDRESS',
-            style: text.labelSmall?.copyWith(
-              color: AppColors.textTertiary,
-              fontSize: 10,
-              letterSpacing: 1.0,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            address,
-            style: text.bodyMedium
-                ?.copyWith(height: 1.4, color: AppColors.textSecondary),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          if (email != null) ...[
-            Text(
-              'EMAIL US',
-              style: text.labelSmall?.copyWith(
-                color: AppColors.textTertiary,
-                fontSize: 10,
-                letterSpacing: 1.0,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              email!,
-              style: text.bodyMedium?.copyWith(color: AppColors.textSecondary),
-            ),
-            const SizedBox(height: AppSpacing.md),
-          ],
-          Text(
-            'CALL US',
-            style: text.labelSmall?.copyWith(
-              color: AppColors.textTertiary,
-              fontSize: 10,
-              letterSpacing: 1.0,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            phone,
-            style: text.bodyMedium?.copyWith(color: AppColors.textSecondary),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _RealTimeDataAccessSection extends StatelessWidget {
-  const _RealTimeDataAccessSection();
-
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.sizeOf(context).width;
-    final bool isMobile = AppBreakpoints.isMobile(width);
-    final TextTheme text = Theme.of(context).textTheme;
-
-    final Widget leftAccordions = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'REAL-TIME\nDATA ACCESS.',
-          style: text.headlineLarge?.copyWith(
-            fontWeight: FontWeight.w800,
-            color: AppColors.black,
-            height: 1.1,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          'Connect your global B2B endpoints securely into our central management layer for real-time visibility metrics and live operational infrastructure telemetry.',
-          style: text.bodyMedium
-              ?.copyWith(color: AppColors.textTertiary, height: 1.5),
-        ),
-        const SizedBox(height: AppSpacing.xl),
-        _buildUnderlineAccordion(text, 'API INTEGRATION ENGINE', true),
-        _buildUnderlineAccordion(text, 'LIVE ROUTE TELEMETRY', false),
-      ],
-    );
-
-    final Widget rightMockup = Container(
-      // aspectRatio: 16 / 10,
-      color: AppColors.black,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          const Positioned.fill(
-            child: Opacity(
-              opacity: 0.15,
-              child: SafeNetworkImage(
-                url: ContentRepository.heroImage,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.circle, size: 8, color: Colors.greenAccent),
-              const SizedBox(width: AppSpacing.sm),
-              Text(
-                'LIVE OPERATIONAL STREAM ACTIVED',
-                style: text.labelSmall?.copyWith(
-                  color: AppColors.white,
-                  letterSpacing: 1.5,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-
-    return RevealOnScroll(
-      duration: const Duration(milliseconds: 800),
-      offset: 40,
-      visibleFraction: 0.05,
-      child: Container(
-        color: const Color(0xFFE9ECEF),
-        child: ContentContainer(
-          vertical: AppSpacing.section,
-          child: isMobile
-              ? Column(
-                  children: [
-                    leftAccordions,
-                    const SizedBox(height: AppSpacing.xxl),
-                    rightMockup,
-                  ],
-                )
-              : Row(
-                  children: [
-                    Expanded(flex: 5, child: leftAccordions),
-                    const SizedBox(width: AppSpacing.section),
-                    Expanded(flex: 5, child: rightMockup),
-                  ],
-                ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildUnderlineAccordion(TextTheme text, String label, bool active) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Color(0xFFCED4DA), width: 1)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: text.labelMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              letterSpacing: 1.2,
-              color: active ? AppColors.black : AppColors.textTertiary,
-            ),
-          ),
-          Icon(
-            active ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-            color: active ? AppColors.black : AppColors.textTertiary,
-            size: 20,
-          ),
-        ],
-      ),
-    );
-  }
-}

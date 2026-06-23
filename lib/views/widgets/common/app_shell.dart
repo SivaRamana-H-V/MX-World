@@ -44,22 +44,26 @@ class _AppShellState extends State<AppShell> {
           children: <Widget>[
             MxNavBar(currentRoute: route, onDark: false),
             Expanded(
-              child: NotificationListener<ScrollUpdateNotification>(
-                onNotification: (ScrollUpdateNotification n) {
-                  _scrollOffset.value = n.metrics.pixels;
-                  return false;
-                },
-                child: PageScrollNotifier(
-                  notifier: _scrollOffset,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        widget.child,
-                        const MxFooter(),
-                      ],
-                    ),
+              child: PageScrollNotifier(
+                notifier: _scrollOffset,
+                child: NotificationListener<ScrollUpdateNotification>(
+                  onNotification: (ScrollUpdateNotification n) {
+                    _scrollOffset.value = n.metrics.pixels;
+                    return false;
+                  },
+                  child: CustomScrollView(
+                    slivers: <Widget>[
+                      SliverToBoxAdapter(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            widget.child,
+                            const MxFooter(),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

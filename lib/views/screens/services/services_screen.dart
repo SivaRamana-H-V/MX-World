@@ -132,19 +132,16 @@ class _ServiceHeroBlockState extends State<_ServiceHeroBlock> {
       },
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 450),
-        curve: Curves.fastOutSlowIn,
-        // Height changes smoothly contextually if open or shut
-        height: _isExpanded ? (isMobile ? 660 : 720) : (isMobile ? 460 : 580),
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            Image(
+      child: Stack(
+        children: <Widget>[
+          Positioned.fill(
+            child: Image(
               image: AssetImage(widget.imageUrl),
               fit: BoxFit.cover,
             ),
-            DecoratedBox(
+          ),
+          Positioned.fill(
+            child: DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
@@ -156,15 +153,21 @@ class _ServiceHeroBlockState extends State<_ServiceHeroBlock> {
                 ),
               ),
             ),
-            Padding(
+          ),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+            alignment: Alignment.topCenter,
+            child: Padding(
               padding: AppSpacing.pageGutter(width).copyWith(
                 bottom: AppSpacing.xl,
                 top: AppSpacing.xl,
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: AppSpacing.section),
                   // Upper block layout elements row
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -179,6 +182,8 @@ class _ServiceHeroBlockState extends State<_ServiceHeroBlock> {
                             const SizedBox(height: AppSpacing.sm),
                             Text(
                               widget.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: (isMobile
                                       ? text.displayMedium
                                       : text.displayLarge)
@@ -239,7 +244,7 @@ class _ServiceHeroBlockState extends State<_ServiceHeroBlock> {
                     firstChild:
                         const SizedBox(width: double.infinity, height: 0),
                     secondChild: Padding(
-                      padding: const EdgeInsets.only(top: AppSpacing.xl),
+                      padding: const EdgeInsets.only(top: AppSpacing.md),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -248,7 +253,7 @@ class _ServiceHeroBlockState extends State<_ServiceHeroBlock> {
                             height: 1,
                             color: Colors.white38,
                           ),
-                          const SizedBox(height: AppSpacing.lg),
+                          const SizedBox(height: AppSpacing.md),
                           Text(
                             'SERVICES INCLUDE:',
                             style: text.labelSmall?.copyWith(
@@ -291,8 +296,8 @@ class _ServiceHeroBlockState extends State<_ServiceHeroBlock> {
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -309,7 +314,7 @@ class _SubServiceItem extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.add, size: 14, color: AppColors.white),
+          const Icon(Icons.arrow_forward_ios, size: 10, color: AppColors.accent),
           const SizedBox(width: AppSpacing.sm),
           Text(
             label,

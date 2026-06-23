@@ -192,8 +192,8 @@ ${_messageController.text}
                 color: isFocused
                     ? AppColors.accent
                     : AppColors.textOnDarkSecondary,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
                 letterSpacing: 0.8,
               ),
               child: Text(label),
@@ -217,12 +217,17 @@ ${_messageController.text}
                 controller: controller,
                 maxLines: maxLines,
                 keyboardType: keyboardType,
-                style: const TextStyle(color: AppColors.white, fontSize: 14),
+                style: const TextStyle(
+                  color: AppColors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
                 decoration: InputDecoration(
                   hintText: hint,
                   hintStyle: const TextStyle(
                     color: AppColors.textOnDarkTertiary,
                     fontSize: 14,
+                    fontWeight: FontWeight.w400,
                   ),
                   filled: true,
                   fillColor:
@@ -231,7 +236,13 @@ ${_messageController.text}
                       const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide.none,
+                    borderSide:
+                        const BorderSide(color: AppColors.borderDark, width: 1),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide:
+                        const BorderSide(color: AppColors.borderDark, width: 1),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
@@ -241,7 +252,7 @@ ${_messageController.text}
                   errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
                     borderSide:
-                        const BorderSide(color: Colors.redAccent, width: 1),
+                        const BorderSide(color: Colors.redAccent, width: 1.5),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
@@ -274,8 +285,8 @@ ${_messageController.text}
             label,
             style: const TextStyle(
               color: AppColors.textOnDarkSecondary,
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
               letterSpacing: 0.8,
             ),
           ),
@@ -296,7 +307,11 @@ ${_messageController.text}
                   const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide.none,
+                borderSide: const BorderSide(color: AppColors.borderDark, width: 1),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: const BorderSide(color: AppColors.borderDark, width: 1),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
@@ -304,7 +319,7 @@ ${_messageController.text}
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
-                borderSide: const BorderSide(color: Colors.redAccent, width: 1),
+                borderSide: const BorderSide(color: Colors.redAccent, width: 1.5),
               ),
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
@@ -312,7 +327,7 @@ ${_messageController.text}
               ),
             ),
             dropdownColor: AppColors.charcoal,
-            style: const TextStyle(color: AppColors.white, fontSize: 14),
+            style: const TextStyle(color: AppColors.white, fontSize: 14, fontWeight: FontWeight.w600),
             icon: const Icon(
               Icons.expand_more,
               color: AppColors.textOnDarkSecondary,
@@ -520,8 +535,8 @@ ${_messageController.text}
                     : const Text(
                         'SUBMIT INQUIRY',
                         style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
                           letterSpacing: 1.2,
                         ),
                       ),
@@ -654,7 +669,7 @@ class _EnhancedInquiryHeaderState extends State<_EnhancedInquiryHeader>
                       children: [
                         const SizedBox(height: 40),
                         Text(
-                          'QUICK\nINQUIRY',
+                          'CUSTOMER\nINQUIRIES',
                           style: Theme.of(context)
                               .textTheme
                               .headlineLarge
