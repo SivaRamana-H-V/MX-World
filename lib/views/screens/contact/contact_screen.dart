@@ -6,6 +6,7 @@ import 'package:mxworld/core/theme/app_colors.dart';
 import 'package:mxworld/services/content_repository.dart';
 import 'package:mxworld/views/widgets/common/animated_counter.dart';
 import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
+import 'package:mxworld/views/widgets/common/inquiry_form.dart';
 import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
 
 import 'package:mxworld/views/widgets/common/reveal_on_scroll.dart';
@@ -21,7 +22,7 @@ class ContactScreen extends ConsumerWidget {
         _NetworkHeroSection(),
         _MetricsBand(),
         _StrategicHubsSection(),
-      
+        InquiryForm(),
       ],
     );
   }

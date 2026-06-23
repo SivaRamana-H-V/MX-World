@@ -7,7 +7,6 @@ import 'package:mxworld/models/content_models.dart';
 import 'package:mxworld/services/content_repository.dart';
 import 'package:mxworld/views/widgets/common/animated_counter.dart';
 import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
-import 'package:mxworld/views/widgets/common/inquiry_form.dart';
 import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
 import 'package:mxworld/views/widgets/common/reveal_on_scroll.dart';
 import 'package:mxworld/views/widgets/common/safe_network_image.dart';
@@ -24,7 +23,6 @@ class HomeScreen extends StatelessWidget {
         _WhyChooseUs(),
         _CoreServices(),
         _PortfolioSection(),
-        InquiryForm(),
       ],
     );
   }
@@ -344,6 +342,8 @@ class _ServiceCardState extends State<_ServiceCard> {
                       ),
                       child: Text(
                         widget.service.title.toUpperCase(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ),

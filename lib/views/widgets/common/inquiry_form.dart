@@ -220,14 +220,14 @@ ${_messageController.text}
                 style: const TextStyle(
                   color: AppColors.white,
                   fontSize: 15,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 ),
                 decoration: InputDecoration(
                   hintText: hint,
                   hintStyle: const TextStyle(
                     color: AppColors.textOnDarkTertiary,
                     fontSize: 14,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w600,
                   ),
                   filled: true,
                   fillColor:
@@ -367,7 +367,7 @@ ${_messageController.text}
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  'CUSTOMER ENQUIRIES',
+                  'CUSTOMER INQUIRIES',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppColors.white,
                         fontWeight: FontWeight.w800,
