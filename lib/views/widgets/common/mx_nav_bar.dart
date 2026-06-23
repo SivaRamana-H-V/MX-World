@@ -79,6 +79,8 @@ String _routeLabel(String route) {
       return 'Services';
     case '/contact':
       return 'Contact';
+    case '/':
+      return 'Track Shipment';
     default:
       return '';
   }

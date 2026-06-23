@@ -51,19 +51,15 @@ class _AppShellState extends State<AppShell> {
                     _scrollOffset.value = n.metrics.pixels;
                     return false;
                   },
-                  child: CustomScrollView(
-                    slivers: <Widget>[
-                      SliverToBoxAdapter(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            widget.child,
-                            const MxFooter(),
-                          ],
-                        ),
-                      ),
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        widget.child,
+                        const MxFooter(),
+                      ],
+                    ),
                   ),
                 ),
               ),

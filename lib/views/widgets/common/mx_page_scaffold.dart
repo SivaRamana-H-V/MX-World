@@ -4,8 +4,8 @@ import '../../../core/constants/app_spacing.dart';
 
 /// Stacks page sections vertically inside the [AppShell] scroll view.
 ///
-/// Uses a non-flex layout so section overflow (handled by the parent scroll
-/// view) never triggers a RenderFlex overflow assertion.
+/// A plain [Column] — the parent `SliverFillRemaining(hasScrollBody: true)`
+/// provides unbounded main-axis constraints, so the Column never overflows.
 class MxPageScaffold extends StatelessWidget {
   const MxPageScaffold({super.key, required this.sections});
 
@@ -13,7 +13,9 @@ class MxPageScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListBody(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: sections,
     );
   }
