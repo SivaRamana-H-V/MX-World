@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 
-/// A network image wrapper that supplies loading/error states and fade-in on
-/// load, with memory-cache sizing to keep GPU footprint low.
+/// An asset image wrapper with error fallback.
 class SafeNetworkImage extends StatelessWidget {
   const SafeNetworkImage({
     super.key,
@@ -21,29 +20,9 @@ class SafeNetworkImage extends StatelessWidget {
     final Color placeholder =
         onDark ? AppColors.charcoal : AppColors.borderLight;
 
-    return Image.network(
+    return Image.asset(
       url,
       fit: fit,
-      loadingBuilder: (
-        BuildContext context,
-        Widget child,
-        ImageChunkEvent? progress,
-      ) {
-        if (progress == null) return child;
-        return ColoredBox(
-          color: placeholder,
-          child: const Center(
-            child: SizedBox(
-              width: 22,
-              height: 22,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: AppColors.accentMuted,
-              ),
-            ),
-          ),
-        );
-      },
       errorBuilder: (BuildContext context, Object error, StackTrace? stack) {
         return ColoredBox(
           color: placeholder,

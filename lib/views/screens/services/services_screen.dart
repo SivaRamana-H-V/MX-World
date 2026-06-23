@@ -5,7 +5,7 @@ import 'package:mxworld/core/theme/app_colors.dart';
 import 'package:mxworld/services/content_repository.dart';
 import 'package:mxworld/views/widgets/common/eyebrow_label.dart';
 import 'package:mxworld/views/widgets/common/mx_page_scaffold.dart';
-import 'package:mxworld/views/widgets/common/safe_network_image.dart';
+
 
 class ServicesScreen extends StatelessWidget {
   const ServicesScreen({super.key});
@@ -140,8 +140,8 @@ class _ServiceHeroBlockState extends State<_ServiceHeroBlock> {
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            SafeNetworkImage(
-              url: widget.imageUrl,
+            Image(
+              image: AssetImage(widget.imageUrl),
               fit: BoxFit.cover,
             ),
             DecoratedBox(

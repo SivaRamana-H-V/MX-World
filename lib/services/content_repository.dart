@@ -9,75 +9,19 @@ abstract final class ContentRepository {
 
   // Image URLs use Unsplash source links as licensed placeholders that match
   // the logistics theme of the original design comps.
-  static const String _port =
-      'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1200&q=80';
-  static const String _warehouse =
-      'https://images.unsplash.com/photo-1553413077-190dd305871c?w=1200&q=80';
-  static const String _airCargo =
-      'https://images.unsplash.com/photo-1774698078446-59299e016718?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-  static const String _containerShip =
-      'https://images.unsplash.com/photo-1605281317010-fe5ffe798166?w=1200&q=80';
-  static const String _terminal =
-      'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1200&q=80';
-  static const String _crane = 'https://i.ytimg.com/vi/uRj7bk64GBU/hq720.jpg';
+  static const String _port = 'assets/images/port.jpg';
+  static const String _warehouse = 'assets/images/warehouse.jpg';
+  static const String _terminal = 'assets/images/terminal.jpg';
+  static const String _room = 'assets/images/room.jpg';
+  static const String airFreightImage = 'assets/images/air_freight.png';
+  static const String seaFreightImage = 'assets/images/sea_freight.png';
+  static const String importExportImage = 'assets/images/import_export.png';
 
-  static const String _room =
-      'https://thumbs.dreamstime.com/b/conference-room-office-space-rental-world-map-city-view-business-meetings-global-planning-modern-sleek-design-402026523.jpg';
-// Air Freight - Nose-loading cargo airplane on the tarmac at night
-  static const String airFreightImage =
-      'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=80';
+  static const String expressCargoImage = 'assets/images/express_cargo.png';
 
-  // Sea Freight - Container shipping terminal with cranes at dusk
-  static const String seaFreightImage =
-      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80';
-
-  // Import & Export - Symmetrical warehouse interior aisle with high shelving units
-  static const String importExportImage =
-      'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=1200&q=80';
-
-  // Express Cargo - Close-up motion blur of high-speed sorting conveyor belt packages
-  static const String expressCargoImage =
-      'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=1200&q=80';
-
-  // Door to Door - Close-up of handing over a sleek premium package package parcel
-  static const String doorToDoorImage =
-      'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=1200&q=80';
+  static const String doorToDoorImage = 'assets/images/door_to_door.png';
   static const String heroImage = _terminal;
   static const String aboutHeroImage = _room;
-
-  static const List<PortfolioItem> portfolio = <PortfolioItem>[
-    PortfolioItem(
-      tag: 'HUB EXPANSION',
-      title: 'SHANGHAI HUB EXPANSION',
-      description:
-          'Strategic terminal expansion increasing throughput capacity by 40% '
-          'with automated sorting and real-time cargo tracking systems.',
-      imageUrl: _port,
-      isLarge: true,
-    ),
-    PortfolioItem(
-      tag: 'LOGISTICS CARE',
-      title: 'EURA-LOGIC CARE',
-      description:
-          'Precision cold-chain logistics for pharmaceutical networks.',
-      imageUrl: _warehouse,
-    ),
-    PortfolioItem(
-      tag: 'AVIATION FLEET',
-      title: 'RAPID AIR FLEET',
-      description: 'Time-critical air freight solutions with dedicated cargo '
-          'aircraft operating across intercontinental routes.',
-      imageUrl: _airCargo,
-      isLarge: true,
-    ),
-    PortfolioItem(
-      tag: 'OCEAN FREIGHT',
-      title: "INT'L OCEAN FREIGHT",
-      description: 'End-to-end container shipping with real-time vessel '
-          'tracking and automated documentation handling.',
-      imageUrl: _containerShip,
-    ),
-  ];
 
   static const List<StatItem> homeStats = <StatItem>[
     StatItem(value: '12M+', label: 'METRIC TONS SHIPPED YEARLY'),
@@ -116,7 +60,7 @@ abstract final class ContentRepository {
           'Precision-timed global logistics for high-value cargo. Our aviation '
           'network provides real-time visibility and industry-leading security '
           'for your urgent assets across continents.',
-      imageUrl: _airCargo,
+      imageUrl: airFreightImage,
       actionLabel: 'PRIORITY NETWORK',
     ),
     ServiceItem(
@@ -158,7 +102,7 @@ abstract final class ContentRepository {
       description: 'The final link in the global chain. We provide absolute '
           'door-to-door reliability with white-glove service, fully integrated '
           'with our 4PL management systems.',
-      imageUrl: _crane,
+      imageUrl: doorToDoorImage,
       actionLabel: 'FULL INTEGRATION',
     ),
   ];

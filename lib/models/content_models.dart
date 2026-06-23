@@ -9,24 +9,6 @@ class StatItem {
   final String label;
 }
 
-/// A portfolio showcase card on the home screen.
-@immutable
-class PortfolioItem {
-  const PortfolioItem({
-    required this.tag,
-    required this.title,
-    required this.description,
-    required this.imageUrl,
-    this.isLarge = false,
-  });
-
-  final String tag;
-  final String title;
-  final String description;
-  final String imageUrl;
-  final bool isLarge;
-}
-
 /// A full-bleed service entry on the services screen.
 @immutable
 class ServiceItem {
@@ -153,9 +135,8 @@ class ProjectInquiry {
         orElse: () => ServiceVertical.airFreight,
       ),
       operationalScope: map['operationalScope'] as String? ?? '',
-      submittedAt:
-          DateTime.tryParse(map['submittedAt'] as String? ?? '') ??
-              DateTime.now(),
+      submittedAt: DateTime.tryParse(map['submittedAt'] as String? ?? '') ??
+          DateTime.now(),
     );
   }
 }

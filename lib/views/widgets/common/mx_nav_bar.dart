@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:mxworld/core/constants/app_spacing.dart';
 import 'package:mxworld/core/theme/app_colors.dart';
-import 'package:mxworld/views/widgets/common/mx_button.dart';
+
 import 'package:mxworld/views/widgets/common/under_development.dart';
 
 /// Top navigation bar rendered above every screen.
@@ -62,9 +62,9 @@ class MxNavBar extends StatelessWidget {
                     fg: fg,
                   ),
                 const SizedBox(width: AppSpacing.lg),
-                MxButton(
-                  label: 'Track Shipment',
-                  onDark: onDark,
+                IconButton(
+                  icon: Icon(Icons.track_changes_outlined, color: fg),
+                  tooltip: 'Track Shipment',
                   onPressed: () => showUnderDevelopment(context),
                 ),
               ],
