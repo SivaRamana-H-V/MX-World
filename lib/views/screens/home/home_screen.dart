@@ -298,18 +298,21 @@ class _ServiceCardState extends State<_ServiceCard> {
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme text = Theme.of(context).textTheme;
+    final double w = MediaQuery.sizeOf(context).width;
+    final double fontSize = w >= 1200
+        ? 24
+        : w >= 840
+            ? 24
+            : 22;
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: AnimatedScale(
-        scale: _hovered ? 1.04 : 1.0,
+        scale: _hovered ? 1.03 : 1.0,
         duration: const Duration(milliseconds: 300),
         curve: Curves.fastOutSlowIn,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.fastOutSlowIn,
-          height: _hovered ? 440 : 420,
+        child: SizedBox(
+          height: 420,
           child: GestureDetector(
             onTap: () => context.go('/services'),
             child: Stack(
@@ -331,19 +334,17 @@ class _ServiceCardState extends State<_ServiceCard> {
                 Padding(
                   padding: const EdgeInsets.all(AppSpacing.xl),
                   child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: AnimatedDefaultTextStyle(
-                      duration: const Duration(milliseconds: 300),
-                      style: text.titleMedium!.copyWith(
+                    alignment: Alignment.bottomCenter,
+                    child: Text(
+                      widget.service.title.toUpperCase(),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
                         color: AppColors.white,
                         fontWeight: FontWeight.w800,
-                        letterSpacing: _hovered ? 1.8 : 1.2,
-                        fontSize: _hovered ? 24 : 20,
-                      ),
-                      child: Text(
-                        widget.service.title.toUpperCase(),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        letterSpacing: 1.2,
+                        fontSize: fontSize,
                       ),
                     ),
                   ),
