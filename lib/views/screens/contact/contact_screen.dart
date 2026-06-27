@@ -21,7 +21,6 @@ class ContactScreen extends ConsumerWidget {
       sections: <Widget>[
         _NetworkHeroSection(),
         _MetricsBand(),
-        _StrategicHubsSection(),
         InquiryForm(),
       ],
     );
@@ -230,6 +229,3 @@ class _StrategicHubsSection extends StatelessWidget {
     );
   }
 }
-
-
-

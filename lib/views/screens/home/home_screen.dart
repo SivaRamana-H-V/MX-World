@@ -376,6 +376,7 @@ class _PortfolioSection extends StatelessWidget {
     {'flag': '🇳🇱', 'name': 'Netherlands'},
     {'flag': '🇯🇵', 'name': 'Japan'},
     {'flag': '🇺🇸', 'name': 'United States'},
+    {'flag': '🌍', 'name': '90+ Countries'},
   ];
 
   @override
