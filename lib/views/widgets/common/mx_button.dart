@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_colors.dart';
+import 'package:mxworld/core/theme/app_colors.dart';
 
 /// Sharp-cornered, high-contrast call-to-action button.
 ///

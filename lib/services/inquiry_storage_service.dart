@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../models/content_models.dart';
+import 'package:mxworld/models/content_models.dart';
 
 /// Persists project inquiries to a local Hive box.
 ///

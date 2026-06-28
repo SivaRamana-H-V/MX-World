@@ -1,10 +1,10 @@
 import 'package:go_router/go_router.dart';
 
-import '../../views/screens/contact/contact_screen.dart';
-import '../../views/screens/home/home_screen.dart';
-import '../../views/screens/services/services_screen.dart';
-import '../../views/screens/splash/splash_screen.dart';
-import '../../views/widgets/common/app_shell.dart';
+import 'package:mxworld/views/screens/contact/contact_screen.dart';
+import 'package:mxworld/views/screens/home/home_screen.dart';
+import 'package:mxworld/views/screens/services/services_screen.dart';
+import 'package:mxworld/views/screens/splash/splash_screen.dart';
+import 'package:mxworld/views/widgets/common/app_shell.dart';
 import 'app_transitions.dart';
 
 /// Tracks whether the splash screen has completed its animation.

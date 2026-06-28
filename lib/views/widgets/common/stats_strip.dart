@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_spacing.dart';
-import '../../../models/content_models.dart';
+import 'package:mxworld/core/constants/app_spacing.dart';
+import 'package:mxworld/models/content_models.dart';
 import 'animated_counter.dart';
 
 /// A horizontal strip of large numeric statistics with captions.

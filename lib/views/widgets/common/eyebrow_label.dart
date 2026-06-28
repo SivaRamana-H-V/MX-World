@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_theme.dart';
+import 'package:mxworld/core/theme/app_theme.dart';
 
 /// A small uppercase accent label that sits above section headlines.
 ///

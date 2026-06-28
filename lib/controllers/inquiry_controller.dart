@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/content_models.dart';
-import '../services/inquiry_storage_service.dart';
+import 'package:mxworld/models/content_models.dart';
+import 'package:mxworld/services/inquiry_storage_service.dart';
 import 'providers.dart';
 
 /// Immutable UI state for the project-inquiry form.

@@ -1,4 +1,4 @@
-import '../models/content_models.dart';
+import 'package:mxworld/models/content_models.dart';
 
 /// In-memory content source for the marketing site.
 ///

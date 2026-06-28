@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/theme/app_colors.dart';
+import 'package:mxworld/core/theme/app_colors.dart';
 import 'mx_footer.dart';
 import 'mx_nav_bar.dart';
 import 'page_scroll_notifier.dart';

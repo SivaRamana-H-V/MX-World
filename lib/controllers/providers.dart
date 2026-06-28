@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../services/inquiry_storage_service.dart';
+import 'package:mxworld/services/inquiry_storage_service.dart';
 
 /// Provides the Hive-backed inquiry storage service.
 ///

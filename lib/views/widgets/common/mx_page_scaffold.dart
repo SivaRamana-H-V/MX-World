@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_spacing.dart';
+import 'package:mxworld/core/constants/app_spacing.dart';
 
 /// Stacks page sections vertically inside the [AppShell] scroll view.
 ///

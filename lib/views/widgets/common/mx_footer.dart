@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../core/constants/app_spacing.dart';
-import '../../../core/theme/app_colors.dart';
+import 'package:mxworld/core/constants/app_spacing.dart';
+import 'package:mxworld/core/theme/app_colors.dart';
 
 /// Column of links rendered in the footer.
 @immutable
@@ -95,53 +95,87 @@ class MxFooter extends StatelessWidget {
       ),
     );
 
-    final List<FooterColumn> effectiveColumns =
-        columns ?? _defaultColumns;
+    final List<FooterColumn> effectiveColumns = columns ?? _defaultColumns;
 
     final Widget hqBlock = SizedBox(
-      width: 220,
-      child: Column(
+      width: 340, // Increased width to accommodate two columns
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'HEADQUARTERS',
-            style: text.labelMedium?.copyWith(
-              color: AppColors.textOnDarkTertiary,
-              letterSpacing: 1.6,
+        children: [
+          // LEFT COLUMN - HQ Details
+          Expanded(
+            flex: 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'HEADQUARTERS',
+                  style: text.labelMedium?.copyWith(
+                    color: AppColors.textOnDarkTertiary,
+                    letterSpacing: 1.6,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Text(
+                  'COIMBATORE',
+                  style: text.bodyMedium?.copyWith(
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  '141, EB Colony Ponnairajpuram,\nPalaniappa Nagar, Coimbatore-641001',
+                  style: text.bodySmall?.copyWith(
+                    color: AppColors.textOnDarkSecondary,
+                    height: 1.5,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  '+91 83004 47268',
+                  style: text.bodySmall?.copyWith(
+                    color: AppColors.textOnDarkSecondary,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                GestureDetector(
+                  onTap: () =>
+                      launchUrl(Uri.parse('mailto:lokeshkiran@mxworld.in')),
+                  child: Text(
+                    'lokeshkiran@mxworld.in',
+                    style: text.bodySmall?.copyWith(
+                      color: AppColors.accent,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            'COIMBATORE',
-            style: text.bodyMedium?.copyWith(
-              color: AppColors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            '141, EB Colony Ponnairajpuram,\nPalaniappa Nagar, Coimbatore-641001',
-            style: text.bodySmall?.copyWith(
-              color: AppColors.textOnDarkSecondary,
-              height: 1.5,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            '+91 83004 47268',
-            style: text.bodySmall?.copyWith(
-              color: AppColors.textOnDarkSecondary,
-            ),
-          ),
-          const SizedBox(height: 2),
-          GestureDetector(
-            onTap: () => launchUrl(Uri.parse('mailto:lokeshkiran@mxworld.in')),
-            child: Text(
-              'lokeshkiran@mxworld.in',
-              style: text.bodySmall?.copyWith(
-                color: AppColors.accent,
-                decoration: TextDecoration.underline,
-              ),
+          // RIGHT COLUMN - Branches
+          Expanded(
+            flex: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'BRANCHES',
+                  style: text.labelMedium?.copyWith(
+                    color: AppColors.textOnDarkTertiary,
+                    letterSpacing: 1.6,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Text(
+                  'Tiruppur, Chennai,\nBangalore, Mumbai,\nDelhi',
+                  style: text.bodyMedium?.copyWith(
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w700,
+                    height: 1.5,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../core/constants/app_spacing.dart';
-import '../../../core/theme/app_colors.dart';
+import 'package:mxworld/core/constants/app_spacing.dart';
+import 'package:mxworld/core/theme/app_colors.dart';
 
 /// Enhanced customer inquiry form with smooth animations, improved UX,
 /// and proper form validation with focus states and success feedback.
@@ -307,11 +307,13 @@ ${_messageController.text}
                   const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
-                borderSide: const BorderSide(color: AppColors.borderDark, width: 1),
+                borderSide:
+                    const BorderSide(color: AppColors.borderDark, width: 1),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
-                borderSide: const BorderSide(color: AppColors.borderDark, width: 1),
+                borderSide:
+                    const BorderSide(color: AppColors.borderDark, width: 1),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
@@ -319,7 +321,8 @@ ${_messageController.text}
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
-                borderSide: const BorderSide(color: Colors.redAccent, width: 1.5),
+                borderSide:
+                    const BorderSide(color: Colors.redAccent, width: 1.5),
               ),
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
@@ -327,7 +330,10 @@ ${_messageController.text}
               ),
             ),
             dropdownColor: AppColors.charcoal,
-            style: const TextStyle(color: AppColors.white, fontSize: 14, fontWeight: FontWeight.w600),
+            style: const TextStyle(
+                color: AppColors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w600),
             icon: const Icon(
               Icons.expand_more,
               color: AppColors.textOnDarkSecondary,
