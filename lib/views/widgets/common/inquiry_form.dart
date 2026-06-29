@@ -331,9 +331,10 @@ ${_messageController.text}
             ),
             dropdownColor: AppColors.charcoal,
             style: const TextStyle(
-                color: AppColors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w600),
+              color: AppColors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
             icon: const Icon(
               Icons.expand_more,
               color: AppColors.textOnDarkSecondary,
